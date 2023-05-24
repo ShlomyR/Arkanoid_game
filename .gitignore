@@ -1,6 +1,6 @@
 main
 
-../../top10.dat
+top10.dat
 
 # Prerequisites
 *.d
