@@ -9,7 +9,7 @@ GameResetterImpl::GameResetterImpl(Brick &brick, Paddle &paddle,WindowManager &w
 , m_paddle(paddle)
 , m_window(window)
 , m_gameState(gameState)
-, m_parser()
+, m_blockParser()
 {}
 
 void GameResetterImpl::resetGameOver()

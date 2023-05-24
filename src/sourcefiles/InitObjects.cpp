@@ -10,7 +10,7 @@ InitObjects::InitObjects(sf::Vector2u windowSize, std::string windowTitle, int s
     , m_points(m_gameState)
     , m_menu(m_window, m_gameState)
     , m_hud(m_window.getRenderWindow())
-    , m_parser()
+    , m_blockParser()
     , m_paddleKeys(m_paddle)
     , m_gameResetter(std::make_unique<GameResetterImpl>(m_brick,m_paddle,m_window,m_gameState))
     , m_physicsManager(m_ball, m_brick, m_paddle, m_border, m_gameState, m_points, *m_gameResetter)

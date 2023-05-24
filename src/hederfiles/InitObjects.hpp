@@ -21,7 +21,7 @@
 #include "../hederfiles/StateChanger.hpp"
 #include "../hederfiles/Points.hpp"
 #include "../hederfiles/HighScoreManager.hpp"
-#include "../hederfiles/Parser_1.hpp"
+#include "../hederfiles/BlockParser.hpp"
 #include "../hederfiles/GameResetter.hpp"
 
 class InitObjects {
@@ -41,7 +41,7 @@ private:
     Points m_points;
     Menu m_menu;
     Hud m_hud;
-    Parser m_parser;
+    BlockParser m_blockParser;
     PaddleArrowsHandnling m_paddleKeys;
     std::unique_ptr<GameResetter> m_gameResetter;
     PhysicsManager m_physicsManager;

@@ -8,11 +8,11 @@
 // #include "CheckCondition.hpp"
 // #include "Command.hpp"
 
-#include "../hederfiles/Command.hpp"
-#include "../hederfiles/Parser.hpp"
-#include "../hederfiles/SymbolVar.hpp"
-#include "../hederfiles/CheckCondition.hpp"
-#include "../hederfiles/Command.hpp"
+#include "../hederfiles/testing/Command.hpp"
+#include "../hederfiles/testing/Parser.hpp"
+#include "../hederfiles/testing/SymbolVar.hpp"
+#include "../hederfiles/testing/CheckCondition.hpp"
+#include "../hederfiles/testing/Command.hpp"
 
 
 void EqualMapCommand::updateFromDB(std::vector<std::string> const&line)

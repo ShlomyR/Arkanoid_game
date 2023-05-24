@@ -17,11 +17,11 @@
     sf::Sprite sprite;
 };
 
-class Parser
+class BlockParser
 {
 public:
-    Parser() {}
-    ~Parser() = default;
+    BlockParser() {}
+    ~BlockParser() = default;
    
     std::vector<BrickLevel> readLevelFile(int levelNumber);
     bool initSpriteLookup(std::unordered_map<std::string, sf::Texture> &);

@@ -1,5 +1,5 @@
 // #include "WhileLoop.hpp"
-#include "../hederfiles/WhileLoop.hpp"
+#include "../hederfiles/testing/WhileLoop.hpp"
 
 int WhileLoop::whileLoop(std::vector<std::string> const&line)
 { 

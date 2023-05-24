@@ -6,9 +6,9 @@
 // #include "CheckCondition.hpp"
 // #include "Command.hpp"
 
-#include "../hederfiles/Command.hpp"
-#include "../hederfiles/CheckCondition.hpp"
-#include "../hederfiles/SymbolVar.hpp"
+#include "../hederfiles/testing/Command.hpp"
+#include "../hederfiles/testing/CheckCondition.hpp"
+#include "../hederfiles/testing/SymbolVar.hpp"
 
 
 SymbolVar* SymbolVar::getInstance()

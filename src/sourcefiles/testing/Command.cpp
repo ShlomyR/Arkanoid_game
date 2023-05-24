@@ -8,11 +8,11 @@
 // #include "ifCondition.hpp"
 // #include "Store.hpp"
 
-#include "../hederfiles/Parser.hpp"
-#include "../hederfiles/SymbolVar.hpp"
-#include "../hederfiles/WhileLoop.hpp"
-#include "../hederfiles/ifCondition.hpp"
-#include "../hederfiles/Command.hpp"
+#include "../hederfiles/testing/Parser.hpp"
+#include "../hederfiles/testing/SymbolVar.hpp"
+#include "../hederfiles/testing/WhileLoop.hpp"
+#include "../hederfiles/testing/ifCondition.hpp"
+#include "../hederfiles/testing/Command.hpp"
 
 
 // int GameCommand::DoCommand(std::vector<std::string> const&line)

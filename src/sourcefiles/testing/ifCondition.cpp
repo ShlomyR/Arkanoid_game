@@ -3,10 +3,10 @@
 // #include "Parser.hpp"
 // #include "Lexer.hpp"
 
-#include "../hederfiles/ifCondition.hpp"
-#include "../hederfiles/CheckCondition.hpp"
-#include "../hederfiles/Parser.hpp"
-#include "../hederfiles/Lexer.hpp"
+#include "../hederfiles/testing/ifCondition.hpp"
+#include "../hederfiles/testing/CheckCondition.hpp"
+#include "../hederfiles/testing/Parser.hpp"
+#include "../hederfiles/testing/Lexer.hpp"
 
 
 

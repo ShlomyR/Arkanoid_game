@@ -1,6 +1,6 @@
-#include "../hederfiles/Parser_1.hpp"
+#include "../hederfiles/BlockParser.hpp"
 
-std::vector<BrickLevel> Parser::readLevelFile(int levelNumber)
+std::vector<BrickLevel> BlockParser::readLevelFile(int levelNumber)
 {
     std::vector<BrickLevel> bricks;
 
@@ -29,7 +29,7 @@ std::vector<BrickLevel> Parser::readLevelFile(int levelNumber)
     return bricks;
 }
 
-bool Parser::initSpriteLookup(std::unordered_map<std::string, sf::Texture>& spriteLookup)
+bool BlockParser::initSpriteLookup(std::unordered_map<std::string, sf::Texture>& spriteLookup)
 {
     static const std::vector<std::string> spriteNames {
         "Red", "Green", "Yellow", "Blue", "Blue_sky",
@@ -49,7 +49,7 @@ bool Parser::initSpriteLookup(std::unordered_map<std::string, sf::Texture>& spri
     return true;
 }
 
-bool Parser::readStartPosition(std::ifstream& file, float& startX, float& startY)
+bool BlockParser::readStartPosition(std::ifstream& file, float& startX, float& startY)
 {
     std::string line;
     if (!std::getline(file, line)) {
@@ -66,7 +66,7 @@ bool Parser::readStartPosition(std::ifstream& file, float& startX, float& startY
     return true;
 }
 
-bool Parser::parseLines(std::ifstream& file, const std::unordered_map<std::string, sf::Texture>& spriteLookup,
+bool BlockParser::parseLines(std::ifstream& file, const std::unordered_map<std::string, sf::Texture>& spriteLookup,
                         float startX, float startY, std::vector<BrickLevel>& bricks)
 {
     std::string line;

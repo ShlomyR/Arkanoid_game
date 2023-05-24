@@ -2,7 +2,7 @@
 
 #include "Rectangle.hpp"
 #include "BrickType.hpp"
-#include "Parser_1.hpp"
+#include "BlockParser.hpp"
 
 class GameState;
 
@@ -52,7 +52,7 @@ private:
     std::vector<sf::Vector2i> m_hitBricks;
 
     GameState &m_gameState;
-    Parser m_parser;
+    BlockParser m_blockParser;
     
     BrickColor m_color;
     

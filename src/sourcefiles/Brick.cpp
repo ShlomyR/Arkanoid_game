@@ -8,7 +8,7 @@
 Brick::Brick(const sf::Vector2f &size, const sf::Vector2f &position, const sf::Color &color,GameState &gameState)
 : m_shape(std::make_unique<sf::RectangleShape>(size))
 , m_gameState(gameState)
-, m_parser()
+, m_blockParser()
 , m_currentLevel(m_gameState.getLevel())
 {
     m_shape->setFillColor(sf::Color::Green);
@@ -64,7 +64,7 @@ void Brick::init(const std::vector<BrickLevel> & bricks)
 void Brick::initializeLevels(int endLevel)
 {
     for (int i = 1; i <= endLevel; i++) {
-        init(m_parser.readLevelFile(i));
+        init(m_blockParser.readLevelFile(i));
     }
     m_currentLevel = 0;
 }

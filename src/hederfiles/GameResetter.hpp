@@ -7,7 +7,7 @@ class Paddle;
 class WindowManager;
 class GameState;
 
-#include "Parser_1.hpp"
+#include "BlockParser.hpp"
 
 #include <memory>
 
@@ -23,5 +23,5 @@ private:
     Paddle &m_paddle;
     WindowManager &m_window;
     GameState &m_gameState;
-    Parser m_parser;
+    BlockParser m_blockParser;
 };
