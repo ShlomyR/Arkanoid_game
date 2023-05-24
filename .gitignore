@@ -1,9 +1,9 @@
 main
 
-*.dat
 
 # Prerequisites
 *.d
+*.dat
 
 # Compiled Object files
 *.slo
