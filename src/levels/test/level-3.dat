@@ -1,0 +1,18 @@
+Pos 75,60
+[
+    Row 11 Yellow
+    skip
+    double_Row 3 Blue_sky 8 Green 
+    skip
+    Row 11 Red
+    skip
+    double_Row 8 Green 3 white
+    skip
+    Row 11 Brown
+    skip
+    double_Row 3 Blue 8 Green
+    skip
+    Row 11 Blue
+    skip
+    Row 11 Red
+]
