@@ -1,6 +1,6 @@
 main
 
-top10.dat
+src/scores/top10.dat
 
 # Prerequisites
 *.d
