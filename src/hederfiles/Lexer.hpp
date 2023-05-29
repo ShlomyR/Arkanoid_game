@@ -1,27 +1,33 @@
 #pragma once
 
+#include "BlockParser.hpp"
+#include "FileReader.hpp"
+
+#include <unordered_map>
 #include <string>
 #include <vector>
+#include <memory>
 #include <fstream>
 
-
-
-class Lexer 
+class Lexer
 {
 public:
-    static std::vector<std::vector<std::vector<std::string>>>& getWhileVec();
-    static std::vector<std::vector<std::vector<std::string>>>& getIfVec();
-    std::vector<std::vector<std::string>> doLexer(std::string &);
-    
+    Lexer(std::string &);
+    std::vector<std::vector<std::string>> tokenize_file();
+    static std::vector<std::vector<std::vector<std::string>>>& get_while_blocks();
+    static std::vector<std::vector<std::vector<std::string>>>& get_lines_blocks();
+    static std::vector<std::vector<std::vector<std::string>>>& get_if_blocks();
 private:
-    std::vector<std::string> splitByWord(std::string const &, const char Delim);
-    void pushLinesToVec(std::vector<std::vector<std::string>> const&);
-    void printVec(std::vector<std::vector<std::string>> const&);
-    void searchVec(std::vector<std::vector<std::string>> const&,std::string const);
-    //void ifVec(std::vector<std::vector<std::string>> const&);
-    int sizeOfFilesInDirectory(std::string const&);
+    std::vector<std::vector<std::string>> read_file_contents();
+    void process_blocks();
+    void register_block_parser(const std::string &, std::shared_ptr<BlockParser> );
+    void print_vector(const std::vector<std::vector<std::string>> &, const std::string &);
 private:
-    static std::vector<std::vector<std::vector<std::string>>> m_vec_vec_vec_while;
-    static std::vector<std::vector<std::vector<std::string>>> m_vec_vec_vec_if;
+    FileReader m_fileReader;
     std::ifstream m_program;
+    std::string m_src;
+    std::unordered_map<std::string, std::shared_ptr<BlockParser>> m_blockParsers;
+    static std::vector<std::vector<std::vector<std::string>>> m_while_blocks;
+    static std::vector<std::vector<std::vector<std::string>>> m_if_blocks;
+    static std::vector<std::vector<std::vector<std::string>>> m_lines_blocks;
 };

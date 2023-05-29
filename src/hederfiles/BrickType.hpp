@@ -1,25 +1,35 @@
 #pragma once
 
-enum class BrickType {
+#include <SFML/Graphics.hpp>
+
+struct BrickLevel
+{
+    float x;
+    float y;
+    std::string color;
+    sf::Sprite sprite;
+}; 
+
+enum class BrickType
+{
     Indestructible,
     OneHit,
     TwoHits,
 };
 
-enum class BrickColor {
+enum class BrickColor
+{
+    GRAY,
     RED,
     BLUE,
-    YELLOW,
-    GREEN,
-    BLACK,
-    WHITE,
-    PURPLE,
-    ORANGE,
-    DEEP_ORANGE,
-    PINK,
-    GRAY,
     BLUE_SKY,
+    GREEN,
+    DEEP_ORANGE,
+    ORANGE,
+    YELLOW,
+    PINK,
     BROWN,
+    GREEN_BRIGHT,
 };
 
 struct BrickState
@@ -27,4 +37,3 @@ struct BrickState
     BrickType brickType;
     BrickColor brickColor;
 };
-

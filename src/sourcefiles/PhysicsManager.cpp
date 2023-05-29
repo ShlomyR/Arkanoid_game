@@ -1,11 +1,11 @@
-#include "../hederfiles/PhysicsManager.hpp"
-#include "../hederfiles/Ball.hpp"
-#include "../hederfiles/Brick.hpp"
-#include "../hederfiles/Border.hpp"
-#include "../hederfiles/Paddle.hpp"
-#include "../hederfiles/GameState.hpp"
-#include "../hederfiles/Points.hpp"
-#include "../hederfiles/GameResetter.hpp"
+#include "PhysicsManager.hpp"
+#include "Ball.hpp"
+#include "Brick.hpp"
+#include "Border.hpp"
+#include "Paddle.hpp"
+#include "GameState.hpp"
+#include "Points.hpp"
+#include "GameResetter.hpp"
 
 PhysicsManager::PhysicsManager(Ball& ball, Brick& brick, Paddle& paddle, Border& border, GameState& game_state, Points &points, GameResetter &gameResetter)
 : m_ball(ball)
@@ -28,17 +28,7 @@ void PhysicsManager::update(float deltaTime) {
         m_ball.move(m_ball.getDirection().x * m_ballSpeed * deltaTime,m_ball.getDirection().y * m_ballSpeed * deltaTime);
     } else {
         m_ball.setPosition(m_paddle.getCenterPosition().x,m_paddle.getCenterPosition().y);
-    }
-    if (m_brick.getVecBricks()[m_game_state.getLevel()].empty()) {
-        m_paddle.setIsPressed(false);
-        if (m_game_state.getLevel() != 1) {
-            m_game_state.nextLevel();
-            m_brick.setCurrLevel(m_game_state.getLevel());
-        } else {
-            m_gameResetter.reset();
-            m_game_state.setState(State::UpdateHighScorePage);
-        }
-    }    
+    }   
 }
 
 void PhysicsManager::checkPaddleCollision(Ball& m_ball, Paddle& m_paddle) {
@@ -121,7 +111,6 @@ void PhysicsManager::checkPaddleBorderCollision(Paddle& m_paddle, Border& m_bord
     if (newPaddleX != paddlePos.x)
     {
         m_paddle.setPosition(newPaddleX, paddlePos.y);
-
     }
 }
 

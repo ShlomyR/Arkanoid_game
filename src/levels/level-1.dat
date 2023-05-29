@@ -1,7 +1,5 @@
-pos 75,60
-11 Gray ]
-11 Red ]
-11 Blue ]
-11 Orange ]
-11 Blue_sky ]
-11 Yellow ]
+var pos = bind 75,60
+var containerType = bind vector,tuple
+var str  = bind 11,Gray,],11,Red,],11,Blue,],11,Orange,],11,Blue_sky,],11,Yellow,]
+
+level pos containerType str

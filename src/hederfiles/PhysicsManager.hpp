@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+
 class Ball;
 class Brick;
 class Border;
@@ -10,7 +11,8 @@ class Points;
 class GameResetter;
 
 
-class PhysicsManager {
+class PhysicsManager 
+{
 public:
     PhysicsManager(
         Ball& ball

@@ -4,7 +4,8 @@
 
 #include <memory>
 
-class SoundManager {
+class SoundManager
+{
 public:
     ~SoundManager();
     static SoundManager *getInstance();

@@ -1,29 +1,32 @@
-#include "../hederfiles/Hud.hpp"
-#include "../hederfiles/HighScoreManager.hpp"
-#include "../hederfiles/GameState.hpp"
 #include "Hud.hpp"
+#include "HighScoreManager.hpp"
+#include "GameState.hpp"
 
-void Hud::update(int score, int health, int highScore, GameState &gameState)
+Hud::Hud(sf::RenderWindow& window)
+: m_window(window)
+, m_highScoreManager()
 {
-    m_scoreText.setString("Score: " + std::to_string(score));
-    m_healthText.setString("Health: " + std::to_string(health));
-    m_highScoreText.setString("High Score: " + std::to_string(highScore));
+    if (!m_font.loadFromFile("src/fonts/kenVectoFutureThin2.ttf")) {
+        throw std::runtime_error("Could not load the font!!!");
+    }
+    makeText(m_scoreText, m_font, "NONE", sf::Vector2i(10, 10));
+    makeText(m_healthText, m_font, "NONE", sf::Vector2i(window.getSize().x -150, 10));
+    makeText(m_gameOverText, m_font, "NONE", sf::Vector2i(window.getSize().x / 2.f, window.getSize().y / 2.f));
+    makeText(m_highScoreText, m_font, "NONE", sf::Vector2i(window.getSize().x - 500, 10));
+    makeText(m_highScoreNamesText, m_font, "NONE", sf::Vector2i(100, 150));
+    makeText(m_highScoreScoresText, m_font, "NONE", sf::Vector2i(600, 150));
+    makeText(m_highScoreInputText, m_font, "NONE", sf::Vector2i(250, 20));
+    makeText(m_inputText, m_font, name, sf::Vector2i(350, 45));
+}
+
+void Hud::update(GameState &gameState)
+{
+    m_scoreText.setString("Score: " + std::to_string(gameState.getScore()));
+    m_healthText.setString("Health: " + std::to_string(gameState.getHealth()));
+    m_highScoreText.setString("High Score: " + std::to_string(gameState.getHighScore()));
     m_highScoreManager.scoreNameTextLogic(m_highScoreNamesText);
     m_highScoreManager.scoreScoresTextLogic(m_highScoreScoresText);
     m_highScoreManager.updateInputTextLogic(m_highScoreInputText);
-    if (gameState.getScore() < gameState.getHighScore()) {
-        gameState.setHighScore(m_highScoreManager.getFirstHighScore());
-    } else {
-        gameState.setHighScore(gameState.getScore());
-    }
-    if (gameState.getHealth() == 0) {
-        if (gameState.getScore() != gameState.getHighScore()) {
-            gameState.setState(State::GameOver);
-        } else {
-            gameState.setState(State::UpdateHighScorePage);
-        }
-    }
-    
 }
 
 void Hud::draw(sf::RenderWindow &window,std::string currentState)

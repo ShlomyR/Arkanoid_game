@@ -2,7 +2,8 @@
 
 #include <iostream>
 
-enum class State{
+enum class State
+{
     MenuPage = 0,
     PlayPage,
     HighScorePage,
@@ -15,25 +16,20 @@ enum class State{
     NoHealth,
 };
 
-
-class GameState {
+class GameState
+{
 public:
     GameState(int health, int level, int score, int high_score, int maxLevel);
-
     int getHealth() const;
     int getLevel() const;
     int getScore() const;
     int getHighScore() const;
     int getMaxLevel() const;
-
     State getState() const;
     void setState(State);
     void setScore(int);
-
     void setHighScore(size_t);
-
     void reset();
-
     void decreaseHealth();
     void increaseScore();
     void nextLevel();
@@ -47,6 +43,5 @@ private:
     int m_max_level;
     int m_score;
     int m_high_score;
-
     State currentState = State::MenuPage;
 };

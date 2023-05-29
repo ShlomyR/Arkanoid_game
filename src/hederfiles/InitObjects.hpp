@@ -4,27 +4,29 @@
 #include <iostream>
 #include <cmath>
 
-#include "../hederfiles/Ball.hpp"
-#include "../hederfiles/Paddle.hpp"
-#include "../hederfiles/Border.hpp"
-#include "../hederfiles/Brick.hpp"
-#include "../hederfiles/WindowManager.hpp"
-#include "../hederfiles/GameLoop.hpp"
-#include "../hederfiles/InputHandler.hpp"
-#include "../hederfiles/GameState.hpp"
-#include "../hederfiles/GameStateUpdater.hpp"
-#include "../hederfiles/Renderer.hpp"
-#include "../hederfiles/Menu.hpp"
-#include "../hederfiles/MouseButton.hpp"
-#include "../hederfiles/PhysicsManager.hpp"
-#include "../hederfiles/Hud.hpp"
-#include "../hederfiles/StateChanger.hpp"
-#include "../hederfiles/Points.hpp"
-#include "../hederfiles/HighScoreManager.hpp"
-#include "../hederfiles/BlockParser.hpp"
-#include "../hederfiles/GameResetter.hpp"
+#include "Ball.hpp"
+#include "Paddle.hpp"
+#include "Border.hpp"
+#include "Brick.hpp"
+#include "WindowManager.hpp"
+#include "GameLoop.hpp"
+#include "InputHandlerImpl.hpp"
+#include "GameState.hpp"
+#include "GameStateUpdaterImpl.hpp"
+#include "Renderer.hpp"
+#include "Menu.hpp"
+#include "MouseButton.hpp"
+#include "PhysicsManager.hpp"
+#include "Hud.hpp"
+#include "StateChanger.hpp"
+#include "Points.hpp"
+#include "HighScoreManager.hpp"
+#include "Parser/BlockParser.hpp"
+#include "GameResetter.hpp"
+#include "Background.hpp"
 
-class InitObjects {
+class InitObjects
+{
 public:
     InitObjects(sf::Vector2u windowSize, std::string windowTitle, int startingLives, int startingLevel, int maxLevel);
 
@@ -41,7 +43,7 @@ private:
     Points m_points;
     Menu m_menu;
     Hud m_hud;
-    BlockParser m_blockParser;
+    Background m_background;
     PaddleArrowsHandnling m_paddleKeys;
     std::unique_ptr<GameResetter> m_gameResetter;
     PhysicsManager m_physicsManager;
@@ -49,5 +51,6 @@ private:
     std::unique_ptr<Renderer> m_renderer;
     std::unique_ptr<GameStateUpdater> m_gameStateUpdater;
     std::unique_ptr<GameLoop> m_gameLoop;
+
 
 };

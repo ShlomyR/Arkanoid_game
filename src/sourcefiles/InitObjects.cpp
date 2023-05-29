@@ -1,4 +1,5 @@
-#include "../hederfiles/InitObjects.hpp"
+#include "InitObjects.hpp"
+#include "BrickSetter.hpp"
 
 InitObjects::InitObjects(sf::Vector2u windowSize, std::string windowTitle, int startingLives, int startingLevel, int maxLevel)
     : m_window(windowSize, windowTitle)
@@ -10,19 +11,19 @@ InitObjects::InitObjects(sf::Vector2u windowSize, std::string windowTitle, int s
     , m_points(m_gameState)
     , m_menu(m_window, m_gameState)
     , m_hud(m_window.getRenderWindow())
-    , m_blockParser()
+    , m_background()
     , m_paddleKeys(m_paddle)
     , m_gameResetter(std::make_unique<GameResetterImpl>(m_brick,m_paddle,m_window,m_gameState))
     , m_physicsManager(m_ball, m_brick, m_paddle, m_border, m_gameState, m_points, *m_gameResetter)
     , m_inputHandler(std::make_unique<InputHandlerImpl>(m_window.getRenderWindow(), m_paddleKeys, m_gameState, m_menu, m_hud))
-    , m_renderer(std::make_unique<RendererImpl>(m_window, m_gameState, m_menu, m_physicsManager, m_hud, m_paddle, m_ball, m_brick, m_border))
-    , m_gameStateUpdater(std::make_unique<GameStateUpdaterImpl>(m_gameState, *m_inputHandler, m_menu, m_physicsManager, m_hud, m_paddle, m_brick, *m_gameResetter))
+    , m_renderer(std::make_unique<RendererImpl>(m_window, m_gameState, m_menu, m_physicsManager, m_hud, m_paddle, m_ball, m_brick, m_border, m_background))
+    , m_gameStateUpdater(std::make_unique<GameStateUpdaterImpl>(m_gameState, *m_inputHandler, m_menu, m_physicsManager, m_hud, m_paddle, m_brick, *m_gameResetter, m_window))
     , m_gameLoop(std::make_unique<GameLoopImpl>(m_window, *m_inputHandler, *m_gameStateUpdater, *m_renderer,*m_gameResetter))
 {}
 
 void InitObjects::init()
 {
-    m_brick.initializeLevels(m_gameState.getMaxLevel());
+    m_brick.initializeLevels();
 }
 
 void InitObjects::run()

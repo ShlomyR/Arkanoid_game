@@ -1,5 +1,5 @@
-#include "../hederfiles/StateChanger.hpp"
-#include "../hederfiles/GameStateUpdater.hpp"
+#include "StateChanger.hpp"
+#include "GameStateUpdaterImpl.hpp"
 
 StateChanger::StateChanger(GameStateUpdater &gameStateUpdater)
 : m_gameStateUpdater(gameStateUpdater)

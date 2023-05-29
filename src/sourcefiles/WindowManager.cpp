@@ -1,4 +1,4 @@
-#include "../hederfiles/WindowManager.hpp"
+#include "WindowManager.hpp"
 
 
 WindowManager::WindowManager(const sf::Vector2u& windowSize, const std::string& windowTitle)

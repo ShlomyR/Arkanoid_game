@@ -1,0 +1,35 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "compilerPathInCppPropertiesJson": "/usr/bin/gcc",
+            "includePath": [
+                "/home/shlomy/Desktop/**",
+                "${workspaceFolder}/src/hederfiles/Commands",
+                "${workspaceFolder}/src/hederfiles",
+                "${workspaceFolder}/src/hederfiles/Parser",
+                "${workspaceFolder}/src/hederfiles/Interfaces",
+                "${workspaceFolder}/src/hederfiles/Parser",
+                "${workspaceFolder}/src/hederfiles/Commands",
+                "${workspaceFolder}/src/hederfiles",
+                "${workspaceFolder}/src/hederfiles",
+                "${workspaceFolder}/src/hederfiles",
+                "${workspaceFolder}/src/hederfiles/Interfaces"
+            ],
+            "defines": [],
+            "cStandard": "c17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-x64",
+            "mergeConfigurations": false,
+            "compilerPath": "/usr/bin/gcc",
+            "configurationProvider": "ms-vscode.makefile-tools",
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "${workspaceFolder}/**"
+                ]
+            }
+        }
+    ],
+    "version": 4
+}

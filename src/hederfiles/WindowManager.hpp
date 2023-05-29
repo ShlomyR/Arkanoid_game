@@ -2,7 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 
-class WindowManager {
+class WindowManager
+{
 public:
     WindowManager(const sf::Vector2u& windowSize, const std::string& windowTitle);
     bool isOpen() const;

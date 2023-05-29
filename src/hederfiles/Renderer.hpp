@@ -8,10 +8,23 @@ class Paddle;
 class Ball;
 class Brick;
 class Border;
+class Background;
 
-class RendererImpl : public Renderer {
+class RendererImpl : public Renderer
+{
 public:
-    RendererImpl(WindowManager &window,GameState &gameState,Menu &menu,PhysicsManager &physicsManager, Hud &hud, Paddle &paddle, Ball &ball, Brick &brick, Border &border);
+    RendererImpl(WindowManager &
+        , GameState &
+        , Menu &
+        , PhysicsManager &
+        , Hud &
+        , Paddle &
+        , Ball &
+        , Brick &
+        , Border &
+        , Background &
+    );
+
     void render() override;
 private:
     WindowManager &m_window;
@@ -23,4 +36,5 @@ private:
     Ball &m_ball;
     Brick &m_brick;
     Border &m_border;
+    Background &m_background;
 };

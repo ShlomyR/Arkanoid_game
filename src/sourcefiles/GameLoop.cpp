@@ -1,5 +1,5 @@
-#include "../hederfiles/GameLoop.hpp"
-#include "../hederfiles/GameResetter.hpp"
+#include "GameLoop.hpp"
+#include "GameResetter.hpp"
 
 GameLoopImpl::GameLoopImpl(WindowManager &window, InputHandler &inputHandler, GameStateUpdater &gameStateUpdater, Renderer &renderer, GameResetter &gameResetter)
 : m_window(window)
