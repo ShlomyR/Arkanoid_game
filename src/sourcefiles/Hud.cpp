@@ -43,7 +43,7 @@ void Hud::draw(sf::RenderWindow &window,std::string currentState)
         window.draw(m_highScoreScoresText);
         window.draw(m_highScoreInputText);   
         window.draw(m_inputText);
-    } else if (currentState == "game over") {
+    } else {
         
     }
 }
@@ -70,4 +70,11 @@ void Hud::makeText(sf::Text &text, sf::Font &font, std::string str, sf::Vector2i
     text.setFillColor(sf::Color::White);
     text.setString(str);
     text.setPosition(vec2i.x,vec2i.y);
+}
+
+void Hud::updateResoloution(const sf::Vector2u &windowSize)
+{
+    m_scoreText.setPosition(10, 10);
+    m_healthText.setPosition(windowSize.x -150, 10);
+    m_highScoreText.setPosition(windowSize.x/2 - 80, 10);
 }

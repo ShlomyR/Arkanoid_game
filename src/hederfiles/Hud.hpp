@@ -18,6 +18,7 @@ public:
     std::string &getHighScoreInputText();
     sf::Text &getInputText();
     HighScoreManager &getHighScoreManager();
+    void updateResoloution(const sf::Vector2u &);
 private:
     void makeText(sf::Text&,sf::Font&,std::string,sf::Vector2i);
 private:
@@ -30,6 +31,7 @@ private:
     sf::Text m_highScoreNamesText;
     sf::Text m_highScoreScoresText;
     sf::Text m_highScoreInputText;
+    
     std::string name;
     sf::Text m_inputText;
     HighScoreManager m_highScoreManager;
