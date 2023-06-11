@@ -8,6 +8,7 @@ public:
     static BrickSetter *getInstance();
     void setBricks(std::vector<BrickLevel>&);
     std::vector<std::vector<BrickLevel>> getBricks();
+    void deleteAllBricks();
 private:
     BrickSetter() = default;
 private:
