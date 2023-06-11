@@ -12,9 +12,10 @@ void InstructionsOption::draw(sf::RenderWindow& window)
 
 bool InstructionsOption::handleInput(InputHandler& inputHandler, GameState &)
 {
-    bool mouseHover = m_instructionsText.getGlobalBounds().contains(inputHandler.getMousePosition());
+    // bool mouseHover = m_instructionsText.getGlobalBounds().contains(inputHandler.getMousePosition());
+    bool mouseHover = false;
     if (mouseHover) {
-        m_instructionsText.setOutlineColor(sf::Color::Blue);
+        // m_instructionsText.setOutlineColor(sf::Color::Blue);
         if (!m_isMusicPlayed) {
             SoundManager::getInstance()->playSound("src/sounds/Menu_Selection_Click.wav");
             m_isMusicPlayed = true;
@@ -27,7 +28,7 @@ bool InstructionsOption::handleInput(InputHandler& inputHandler, GameState &)
     } else {
         m_isMusicPlayed = false;
         setIsSelected(false);
-        m_instructionsText.setOutlineColor(sf::Color::White);
+        // m_instructionsText.setOutlineColor(sf::Color::White);
     }
 
     return false;
@@ -40,7 +41,7 @@ void InstructionsOption::makeButton(sf::RenderWindow& window)
     m_instructionsText.setString("INSTRUCTIONS");
     m_instructionsText.setFont(m_font);
     m_instructionsText.setCharacterSize(48);
-    m_instructionsText.setFillColor(sf::Color::Green);
+    m_instructionsText.setFillColor(sf::Color::Transparent);
     m_instructionsText.setOutlineThickness(2);
     m_instructionsText.setOutlineColor(sf::Color::Black);
     sf::Vector2f buttonPos = sf::Vector2f(window.getSize().x / 2 - m_instructionsText.getGlobalBounds().width / 2, window.getSize().y / 2 + 50);
