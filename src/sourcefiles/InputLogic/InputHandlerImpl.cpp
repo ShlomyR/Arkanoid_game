@@ -1,20 +1,65 @@
 #include "InputHandlerImpl.hpp"
 #include "GameState.hpp"
+#include "Options.hpp"
 #include "Menu.hpp"
 #include "Hud.hpp"
+#include "Difficulty.hpp"
+#include "Video.hpp"
+#include "SoundManager.hpp"
+#include "VolumeManager.hpp"
+#include "SquareWithBricks.hpp"
 
 #include <iostream>
 #include <thread>
 #include <fstream>
 
-InputHandlerImpl::InputHandlerImpl(sf::RenderWindow &window,PaddleArrowsHandnling &paddle_keys, GameState &gameState, Menu &menu, Hud &hud)
+void deleteKeysExceptEscape(std::unordered_map<sf::Keyboard::Key, std::function<void ()>>& keyMap) {
+    auto it = keyMap.begin();
+    while (it != keyMap.end()) {
+        if (it->first != sf::Keyboard::Escape) {
+            it = keyMap.erase(it);
+        } else {
+            ++it;
+        }
+    }
+}
+
+bool InputHandlerImpl::m_isMusicPlayed;
+
+void InputHandlerImpl::printVector(std::unordered_map<sf::Keyboard::Key, std::function<void ()>>& keyMap) {
+    auto it = keyMap.begin();
+    while (it != keyMap.end()) {
+        std::cout << "key: " << keyToString(it->first) << "\n";
+        ++it;
+    }
+}
+
+
+InputHandlerImpl::InputHandlerImpl(sf::RenderWindow &window
+    , PaddleArrowsHandnling &paddle_keys
+    , GameState &gameState
+    , Menu &menu
+    , Options &options
+    , Difficulty &difficulty
+    , Video &video
+    , Hud &hud
+    , ControlSettingsMenu &controlSettingsMenu
+    , VolumeManager &volume
+    , SquareWithBricks &squareWithBricks
+)
 : m_window(window)
 , m_paddle_keys(paddle_keys)
 , m_gameState(gameState)
 , m_menu(menu)
+, m_options(options)
+, m_difficulty(difficulty)
+, m_video(video)
 , m_hud(hud)
+, m_controlSettingsMenu(controlSettingsMenu)
+, m_volume(volume)
 , m_WindowArrowsKey(m_window,m_gameState)
-, m_mouse(m_window,m_menu,gameState)
+, m_mouse(m_window,m_menu,options,m_difficulty,m_video,gameState)
+, m_squareWithBricks(squareWithBricks)
 {
     initMap();
     m_isSelected = false;
@@ -25,20 +70,25 @@ void InputHandlerImpl::handleInput()
 {
     //auto it = keys_action_map.end();
     while (m_window.pollEvent(m_event)) {
+        m_squareWithBricks.update(m_window);
         switch (m_event.type) {
             case sf::Event::Closed:
                 m_window.close();
                 break;
             case sf::Event::KeyPressed:
-                if (m_gameState.getState() != State::UpdateHighScorePage) {
-                    performKeyAction(m_event);
-                }
+                performKeyAction(m_event);
+                updateKeyPressedControlSettingPage();
                 break;
             case sf::Event::MouseButtonPressed:
                 performMouseAction(m_event);
+                if (m_gameState.getState() == State::VolumePage) {
+                    m_volume.updateMousePrest(m_mousePosition);
+                }
+
                 break;
             case sf::Event::MouseMoved:
                 m_mousePosition = m_window.mapPixelToCoords(sf::Vector2i(m_event.mouseMove.x, m_event.mouseMove.y));
+                updateMouseMovedControlSettingPage();
                 break;
             case sf::Event::TextEntered:
                 if (m_gameState.getState() == State::UpdateHighScorePage) {
@@ -72,9 +122,9 @@ void InputHandlerImpl::initMap()
 {
     // keys map
     m_keys_action_map[sf::Keyboard::Escape] = [this]() { m_WindowArrowsKey.escape(); };
-    m_keys_action_map[sf::Keyboard::Left] = [this]() { m_paddle_keys.left(); };
-    m_keys_action_map[sf::Keyboard::Right] = [this]() { m_paddle_keys.right(); };
-    m_keys_action_map[sf::Keyboard::Space] = [this]() { m_paddle_keys.space(); };
+    m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Left")] = [this]() { m_paddle_keys.left(); };
+    m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Right")] = [this]() { m_paddle_keys.right(); };
+    m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Space")] = [this]() { m_paddle_keys.space(); };
     // Testing
     m_keys_action_map[sf::Keyboard::Q] = [this]() { m_gameState.setState(State::MenuPage); };
     m_keys_action_map[sf::Keyboard::A] = [this]() { m_gameState.setState(State::PlayPage); };
@@ -82,6 +132,33 @@ void InputHandlerImpl::initMap()
     m_keys_action_map[sf::Keyboard::W] = [this]() { m_gameState.setState(State::UpdateHighScorePage); };
     // mouse map
     m_mouse_action_map[sf::Mouse::Left] = [this]() { m_mouse.left(false); };
+}
+
+void InputHandlerImpl::updateKeyMap()
+{
+    m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Left")] = [this]() { m_paddle_keys.left(); };
+    m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Right")] = [this]() { m_paddle_keys.right(); };
+    m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Space")] = [this]() { m_paddle_keys.space(); };
+    printVector(m_keys_action_map);
+}
+
+void InputHandlerImpl::updateMouseMovedControlSettingPage()
+{
+    if (m_gameState.getState() == State::ControlSettingPage) {
+        m_controlSettingsMenu.handleMouseMovedInput(m_mousePosition);
+    }
+    if (m_gameState.getState() == State::VolumePage) {
+        m_volume.updateMouseMoved(m_mousePosition);
+    }
+}
+
+void InputHandlerImpl::updateKeyPressedControlSettingPage()
+{
+    if (m_gameState.getState() == State::ControlSettingPage) {
+        deleteKeysExceptEscape(m_keys_action_map);
+        m_controlSettingsMenu.handleKeyPressedInput(m_event,m_mousePosition);
+        updateKeyMap();
+    }
 }
 
 void InputHandlerImpl::performKeyAction(sf::Event event) {
@@ -99,7 +176,14 @@ void InputHandlerImpl::performMouseAction(sf::Event event)
     auto it = m_mouse_action_map.find(event.mouseButton.button);
     if (it != m_mouse_action_map.end()) {
         it->second();
-        std::cout << "m_menu.getIsMenuShown(): " <<  m_menu.getIsMenuShown() << std::endl;
+        if (m_menu.getIsMenuPageShown()) {
+            std::cout << "m_menu.getIsMenuPageShown(): " <<  m_menu.getIsMenuPageShown() << "\n";
+        } else if (m_options.getIsOptionsPageShown()) {
+            std::cout << "m_menu.getIsOptionsPageShown(): " <<  m_options.getIsOptionsPageShown() << "\n";
+        } else if (m_difficulty.getIsDifficultyPageShown()) {
+            std::cout << "m_menu.getIsDifficultyPageShown(): " <<  m_difficulty.getIsDifficultyPageShown() << "\n";
+        }
+        
     } else {
         std::cout << "Sorry bro, the mouse button you pressed doesn't exist." << "\n";
     }
@@ -217,7 +301,6 @@ std::string InputHandlerImpl::keyToString(sf::Keyboard::Key key)
         return it->second;
     } else {
         return "Unknown";
-
     }
 }
 
@@ -279,6 +362,6 @@ void InputHandlerImpl::checkEventEnterName()
     if (m_event.text.unicode == '\r') {
         std::cout << "Nice!!!" << "\n";
         updateHighScoreInFile();
-        m_gameState.setState(State::GameOver);
+        m_gameState.setState(State::HighScorePage);
     }
 }
