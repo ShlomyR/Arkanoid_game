@@ -4,8 +4,6 @@
 
 struct BrickLevel
 {
-    float x;
-    float y;
     std::string color;
     sf::Sprite sprite;
 }; 
