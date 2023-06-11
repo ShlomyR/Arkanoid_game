@@ -2,7 +2,7 @@
 
 #include "MenuOption.hxx"
 
-class ExitOption : public MenuOption
+class OptionsOption : public MenuOption
 {
 public:
     void draw(sf::RenderWindow& ) override;
@@ -13,7 +13,7 @@ public:
     sf::Text* getText() override;
     void setIsTranslucent(bool) override {}
 private:
-    sf::Text m_exitText;
+    sf::Text m_optionsText;
     bool m_isSelected = false;
     static bool m_isMusicPlayed;
 };

@@ -21,8 +21,8 @@ bool PlayOption::handleInput(InputHandler& inputHandler, GameState &gameState)
         }
         if (m_isSelected) {
             m_isSelected = false;
+            setIsSelected(false);
             gameState.setState(State::PlayPage);
-        
         }
     } else {
         m_isMusicPlayed = false;
@@ -43,12 +43,12 @@ void PlayOption::makeButton(sf::RenderWindow& window)
     m_playText.setFillColor(sf::Color::Green);
     m_playText.setOutlineThickness(2);
     m_playText.setOutlineColor(sf::Color::Black);
-    m_playText.setPosition(sf::Vector2f(window.getSize().x / 2 - m_playText.getGlobalBounds().width / 2, window.getSize().y / 2 - 150));
+    sf::Vector2f buttonPos = sf::Vector2f(window.getSize().x / 2 - m_playText.getGlobalBounds().width / 2, window.getSize().y / 2 - 200);
+    m_playText.setPosition(buttonPos);
 }
 
 bool PlayOption::isSelected() const
 {
-
     return m_isSelected;
 }
 
@@ -59,11 +59,10 @@ void PlayOption::setIsSelected(bool value)
         m_playText.setOutlineColor(sf::Color::Blue);
     } else {
         m_playText.setOutlineColor(sf::Color::White);
-
     }
 }
 
-sf::Text PlayOption::getText()
+sf::Text* PlayOption::getText()
 {
-    return m_playText;
+    return &m_playText;
 }

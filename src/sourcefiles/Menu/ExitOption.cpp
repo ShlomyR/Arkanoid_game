@@ -41,12 +41,12 @@ void ExitOption::makeButton(sf::RenderWindow& window)
     m_exitText.setFillColor(sf::Color::Green);
     m_exitText.setOutlineThickness(2);
     m_exitText.setOutlineColor(sf::Color::Black);
-    m_exitText.setPosition(sf::Vector2f(window.getSize().x / 2 - m_exitText.getGlobalBounds().width / 2, window.getSize().y / 2 + 50));
+    sf::Vector2f buttonPos = sf::Vector2f(window.getSize().x / 2 - m_exitText.getGlobalBounds().width / 2, window.getSize().y / 2 + 100);
+    m_exitText.setPosition(buttonPos);
 }
 
 bool ExitOption::isSelected() const
 {
-
     return m_isSelected;
 }
 
@@ -60,7 +60,7 @@ void ExitOption::setIsSelected(bool value)
     }
 }
 
-sf::Text ExitOption::getText()
+sf::Text* ExitOption::getText()
 {
-    return m_exitText;
+    return &m_exitText;
 }
