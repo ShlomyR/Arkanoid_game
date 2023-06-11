@@ -2,13 +2,12 @@
 
 
 WindowManager::WindowManager(const sf::Vector2u& windowSize, const std::string& windowTitle)
-:   m_window(sf::VideoMode(windowSize.x, windowSize.y), windowTitle)
+: m_window(sf::VideoMode(windowSize.x, windowSize.y), windowTitle)
 {
     sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
     sf::Vector2i windowPosition(desktopMode.width / 2 - windowSize.x / 2, desktopMode.height / 2 - windowSize.y / 2);
     m_window.setPosition(windowPosition);
     m_window.setFramerateLimit(60);
-
 }
 
 bool WindowManager::isOpen() const {
@@ -44,3 +43,12 @@ sf::Vector2u WindowManager::getSize() const
 {
     return m_window.getSize();
 }
+
+// void WindowManager::changeResolution(sf::VideoMode videoMode)
+// {
+//     m_window.create(videoMode, "SFML Window_2", sf::Style::Default);
+
+//     sf::Vector2u windowSize = m_window.getSize();
+//     sf::View view(sf::FloatRect(0, 0, windowSize.x, windowSize.y));
+//     m_window.setView(view);
+// }
