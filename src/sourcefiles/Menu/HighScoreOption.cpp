@@ -42,7 +42,8 @@ void HighScoreOption::makeButton(sf::RenderWindow& window)
     m_highScoreText.setFillColor(sf::Color::Green);
     m_highScoreText.setOutlineThickness(2);
     m_highScoreText.setOutlineColor(sf::Color::Black);
-    m_highScoreText.setPosition(sf::Vector2f(window.getSize().x / 2 - m_highScoreText.getGlobalBounds().width / 2, window.getSize().y / 2 - 50));
+    sf::Vector2f buttonPos = sf::Vector2f(window.getSize().x / 2 - m_highScoreText.getGlobalBounds().width / 2, window.getSize().y / 2 - 100);
+    m_highScoreText.setPosition(buttonPos);
 }
 
 bool HighScoreOption::isSelected() const
@@ -62,7 +63,7 @@ void HighScoreOption::setIsSelected(bool value)
     }
 }
 
-sf::Text HighScoreOption::getText()
+sf::Text* HighScoreOption::getText()
 {
-    return m_highScoreText;
+    return &m_highScoreText;
 }
