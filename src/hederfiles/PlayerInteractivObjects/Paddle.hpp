@@ -10,7 +10,6 @@ public:
     ~Paddle() = default;
 
     void move(float, float) override;
-    void update();
     void setPosition(float, float) override;
     void draw(sf::RenderWindow &) override;
     sf::Vector2f getPosition() const override;

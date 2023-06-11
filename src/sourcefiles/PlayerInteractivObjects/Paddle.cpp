@@ -3,7 +3,7 @@
 #include <iostream>
 
 Paddle::Paddle(const sf::Vector2f &size, const sf::Vector2f &position, const sf::Color &color)
-:    m_shape(std::make_shared<sf::RectangleShape>(size))
+: m_shape(std::make_shared<sf::RectangleShape>(size))
 {
     m_shape->setFillColor(sf::Color::Blue);
     m_shape->setOutlineColor(color);
@@ -14,15 +14,6 @@ Paddle::Paddle(const sf::Vector2f &size, const sf::Vector2f &position, const sf:
 void Paddle::move(float x, float y)
 {
     m_shape->move(x, y);
-}
-
-void Paddle::update()
-{
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        move(10, 0);
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        move(-10, 0);
-    }
 }
 
 void Paddle::setPosition(float x, float y)
