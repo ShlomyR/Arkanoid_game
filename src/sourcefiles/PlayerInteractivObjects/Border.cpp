@@ -1,7 +1,7 @@
 #include "Border.hpp"
 
 Border::Border(const sf::Vector2f &size, const sf::Vector2f &position, const sf::Color &color)
-:    m_shape(std::make_unique<sf::RectangleShape>(size))
+: m_shape(std::make_unique<sf::RectangleShape>(size))
 {
     m_shape->setFillColor(sf::Color::Transparent);
     m_shape->setOutlineColor(color);
