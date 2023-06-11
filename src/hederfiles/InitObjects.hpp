@@ -31,7 +31,6 @@
 #include "ControlSettings.hpp"
 #include "ControlSettingsMenu.hpp"
 #include "VolumeManager.hpp"
-#include "SquareWithBricks.hpp"
 
 class InitObjects
 {
@@ -45,7 +44,6 @@ private:
     WindowManager m_window;
     ControlSettings m_controlSettings;
     ControlSettingsMenu m_controlSettingsMenu;
-    SquareWithBricks m_squareWithBricks;
     VolumeManager m_volumeManager;
     Border m_border;
     Paddle m_paddle;

@@ -17,7 +17,6 @@ class Options;
 class Difficulty;
 class Video;
 class VolumeManager;
-class SquareWithBricks;
 
 
 class InputHandlerImpl : public InputHandler
@@ -33,7 +32,6 @@ public:
         , Hud &
         , ControlSettingsMenu &
         , VolumeManager &
-        , SquareWithBricks &
     );
 
     void handleInput() override;
@@ -76,5 +74,4 @@ private:
     VolumeManager &m_volume;
     WindowArrowsKey m_WindowArrowsKey;
     MouseButton m_mouse;
-    SquareWithBricks &m_squareWithBricks;
 };

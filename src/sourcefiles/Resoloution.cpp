@@ -13,8 +13,6 @@
 #include "Video.hpp"
 #include "VolumeManager.hpp"
 #include "ControlSettingsMenu.hpp"
-#include "SquareWithBricks.hpp"
-#include "BrickWrapper.hpp"
 
 int Resoloution::m_count;
 
@@ -29,7 +27,6 @@ Resoloution::Resoloution(WindowManager &window
     , Video &video
     , ControlSettingsMenu &controlSettingsMenu
     , VolumeManager &volume
-    , SquareWithBricks &squareWithBricks
 )
 : m_window(window)
 , m_border(border)
@@ -42,7 +39,6 @@ Resoloution::Resoloution(WindowManager &window
 , m_video(video)
 , m_controlSettingsMenu(controlSettingsMenu)
 , m_volume(volume)
-, m_squareWithBricks(squareWithBricks)
 , m_initialWindowSize(800,600)
 , m_firstBrickPos(75,60)
 {

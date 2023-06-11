@@ -14,7 +14,6 @@ class Difficulty;
 class Video;
 class ControlSettingsMenu;
 class VolumeManager;
-class SquareWithBricks;
 
 class RendererImpl : public Renderer
 {
@@ -34,7 +33,6 @@ public:
         , Background &
         , ControlSettingsMenu &
         , VolumeManager &
-        , SquareWithBricks &
     );
 
     void render() override;
@@ -54,5 +52,4 @@ private:
     Background &m_background;
     ControlSettingsMenu &m_controlSettingsMenu;
     VolumeManager &m_volume;
-    SquareWithBricks &m_squareWithBricks;
 };

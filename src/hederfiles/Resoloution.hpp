@@ -14,7 +14,6 @@ class WindowManager;
 class Video;
 class ControlSettingsMenu;
 class VolumeManager;
-class SquareWithBricks;
 
 #include "MenuOption.hxx"
 #include "BrickType.hpp"
@@ -38,7 +37,6 @@ public:
         , Video&
         , ControlSettingsMenu &
         , VolumeManager &
-        , SquareWithBricks &
     );
     void updateLayout(const sf::Vector2u&);
     void changeResolution(sf::VideoMode);
@@ -63,7 +61,6 @@ private:
     Video& m_video;
     ControlSettingsMenu &m_controlSettingsMenu;
     VolumeManager &m_volume;
-    SquareWithBricks &m_squareWithBricks;
     static int m_count;
     sf::Vector2f m_initialWindowSize;
     sf::Vector2f m_firstBrickPos;

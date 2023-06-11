@@ -11,7 +11,6 @@
 #include "Video.hpp"
 #include "ControlSettingsMenu.hpp"
 #include "VolumeManager.hpp"
-#include "SquareWithBricks.hpp"
 
 RendererImpl::RendererImpl(WindowManager &window
     , GameState &gameState
@@ -28,7 +27,6 @@ RendererImpl::RendererImpl(WindowManager &window
     , Background &background
     , ControlSettingsMenu &controlSettingsMenu
     , VolumeManager &volume
-    , SquareWithBricks &squareWithBricks
 )
 : m_window(window)
 , m_gameState(gameState)
@@ -45,7 +43,6 @@ RendererImpl::RendererImpl(WindowManager &window
 , m_background(background)
 , m_controlSettingsMenu(controlSettingsMenu)
 , m_volume(volume)
-, m_squareWithBricks(squareWithBricks)
 {
     
 }
@@ -62,7 +59,6 @@ void RendererImpl::render()
         m_background.draw(m_window.getRenderWindow());
         m_border.draw(m_window.getRenderWindow());
         m_brick.draw(m_window.getRenderWindow());
-        // m_squareWithBricks.draw(m_window.getRenderWindow());
         m_ball.draw(m_window.getRenderWindow());
         m_hud.draw(m_window.getRenderWindow(), "PlayPage");
         m_paddle.draw(m_window.getRenderWindow());

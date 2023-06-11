@@ -7,7 +7,6 @@
 #include "Video.hpp"
 #include "SoundManager.hpp"
 #include "VolumeManager.hpp"
-#include "SquareWithBricks.hpp"
 
 #include <iostream>
 #include <thread>
@@ -45,7 +44,6 @@ InputHandlerImpl::InputHandlerImpl(sf::RenderWindow &window
     , Hud &hud
     , ControlSettingsMenu &controlSettingsMenu
     , VolumeManager &volume
-    , SquareWithBricks &squareWithBricks
 )
 : m_window(window)
 , m_paddle_keys(paddle_keys)
@@ -59,7 +57,6 @@ InputHandlerImpl::InputHandlerImpl(sf::RenderWindow &window
 , m_volume(volume)
 , m_WindowArrowsKey(m_window,m_gameState)
 , m_mouse(m_window,m_menu,options,m_difficulty,m_video,gameState)
-, m_squareWithBricks(squareWithBricks)
 {
     initMap();
     m_isSelected = false;
@@ -70,7 +67,6 @@ void InputHandlerImpl::handleInput()
 {
     //auto it = keys_action_map.end();
     while (m_window.pollEvent(m_event)) {
-        m_squareWithBricks.update(m_window);
         switch (m_event.type) {
             case sf::Event::Closed:
                 m_window.close();
