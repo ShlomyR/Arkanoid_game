@@ -20,7 +20,10 @@ public:
     std::unique_ptr<sf::CircleShape> &getShape() override;
     void setBallVelocity(sf::Vector2f);
     sf::Vector2f getBallVelocity() const;
+    void setBallSpeed(float);
+    float getBallSpeed();
 private:
     std::unique_ptr<sf::CircleShape> m_shape;
     sf::Vector2f m_direction;
+    float m_BallSpeed;
 };

@@ -4,6 +4,7 @@ Ball::Ball(float radius, const sf::Vector2f &position, const sf::Color &color)
 :    m_shape(std::make_unique<sf::CircleShape>(radius))
 ,   m_direction(1.f, 1.f)
 {
+    m_BallSpeed = 0.03;
     m_shape->setFillColor(color);
     m_shape->setOrigin(radius, radius);
     setPosition(position.x, position.y);
@@ -57,4 +58,14 @@ void Ball::setBallVelocity(sf::Vector2f velocity)
 sf::Vector2f Ball::getBallVelocity() const
 { 
     return m_direction; 
+}
+
+void Ball::setBallSpeed(float speed)
+{
+    m_BallSpeed = speed;
+}
+
+float Ball::getBallSpeed()
+{
+    return m_BallSpeed;
 }
