@@ -13,7 +13,7 @@ void Background::draw(sf::RenderWindow &window)
 
 void Background::init()
 {
-    if (!m_backgroundTexture.loadFromFile("src/images/wallpapersden.com_colorful-space_800x600.jpg")) {
+    if (!m_backgroundTexture.loadFromFile("src/images/Space.jpg")) {
         throw std::runtime_error("The image fails to load: src/images/wallpapersden.com_colorful-space_800x600.jpg");
     }
     sf::Sprite backgroundSprite(m_backgroundTexture);
