@@ -15,3 +15,8 @@ std::vector<std::vector<BrickLevel>> BrickSetter::getBricks()
 {
     return m_bricks;
 }
+
+void BrickSetter::deleteAllBricks()
+{
+    m_bricks.clear();
+}
