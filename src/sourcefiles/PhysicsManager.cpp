@@ -7,7 +7,14 @@
 #include "Points.hpp"
 #include "GameResetter.hpp"
 
-PhysicsManager::PhysicsManager(Ball& ball, Brick& brick, Paddle& paddle, Border& border, GameState& game_state, Points &points, GameResetter &gameResetter)
+PhysicsManager::PhysicsManager(Ball& ball
+    , Brick& brick
+    , Paddle& paddle
+    , Border& border
+    , GameState& game_state
+    , Points &points
+    , GameResetter &gameResetter
+)
 : m_ball(ball)
 , m_brick(brick)
 , m_paddle(paddle)
@@ -18,20 +25,22 @@ PhysicsManager::PhysicsManager(Ball& ball, Brick& brick, Paddle& paddle, Border&
 , m_ballSpeed(200.f)
 {}
 
-void PhysicsManager::update(float deltaTime) {
-    checkPaddleCollision(m_ball, m_paddle);
-    checkBrickCollision(m_ball, m_brick, m_game_state);
-    checkBorderCollision(m_ball, m_border);
-    checkPaddleBorderCollision(m_paddle, m_border);
-
+void PhysicsManager::update(float )
+{
+    checkPaddleBallCollision();
+    checkBrickBallCollision();
+    checkBorderBallCollision();
+    checkPaddleBorderCollision();
+    m_ball.setBallSpeed(m_game_state.getBallSpeed_());
     if (m_paddle.getIsPressed()) {
-        m_ball.move(m_ball.getDirection().x * m_ballSpeed * deltaTime,m_ball.getDirection().y * m_ballSpeed * deltaTime);
+        m_ball.move(m_ball.getDirection().x * m_ballSpeed * m_ball.getBallSpeed(), m_ball.getDirection().y * m_ballSpeed *  m_ball.getBallSpeed());
     } else {
-        m_ball.setPosition(m_paddle.getCenterPosition().x,m_paddle.getCenterPosition().y);
+        m_ball.setPosition(m_paddle.getCenterPosition().x, m_paddle.getCenterPosition().y);
     }   
 }
 
-void PhysicsManager::checkPaddleCollision(Ball& m_ball, Paddle& m_paddle) {
+void PhysicsManager::checkPaddleBallCollision()
+{
     const sf::Vector2f ballPos = m_ball.getPosition();
     const sf::Vector2f ballSize = m_ball.getShape()->getScale();
     const sf::Vector2f paddlePos = m_paddle.getPosition();
@@ -50,9 +59,9 @@ void PhysicsManager::checkPaddleCollision(Ball& m_ball, Paddle& m_paddle) {
     }
 }
 
-void PhysicsManager::checkBrickCollision(Ball& m_ball, Brick& m_brick,GameState& m_game_state) 
+void PhysicsManager::checkBrickBallCollision() 
 {
-    sf::Vector2f ballPos = m_ball.getShape()->getPosition();
+    sf::Vector2f ballPos = m_ball.getPosition();
     sf::Vector2f ballVel = m_ball.getDirection() * m_ball.getBallVelocity().x;
 
     for (size_t i = 0; i < m_brick.getVecBricks()[m_game_state.getLevel()].size(); ++i) {
@@ -87,29 +96,29 @@ void PhysicsManager::checkBrickCollision(Ball& m_ball, Brick& m_brick,GameState&
 }
 
 
-void PhysicsManager::checkBorderCollision(Ball& m_ball, Border& m_border) {
-    if (m_ball.getShape()->getPosition().x - m_ball.getShape()->getRadius() <= m_border.getShape()->getGlobalBounds().left || 
-        m_ball.getShape()->getPosition().x + m_ball.getShape()->getRadius() >= m_border.getShape()->getGlobalBounds().width) {
+void PhysicsManager::checkBorderBallCollision()
+{
+    if (m_ball.getPosition().x - m_ball.getRadius() <= m_border.getShape()->getGlobalBounds().left+5 || 
+        m_ball.getPosition().x + m_ball.getRadius() >= m_border.getShape()->getGlobalBounds().width-7) {
         m_ball.setDirection(sf::Vector2f(-m_ball.getDirection().x, m_ball.getDirection().y));
     }
-    if (m_ball.getShape()->getPosition().y - m_ball.getShape()->getRadius() <= m_border.getShape()->getGlobalBounds().top) {
+    if (m_ball.getPosition().y - m_ball.getRadius() <= m_border.getShape()->getGlobalBounds().top +10) {
         m_ball.setDirection(sf::Vector2f(m_ball.getDirection().x, -m_ball.getDirection().y));
     }
-    if (m_ball.getShape()->getPosition().y + m_ball.getShape()->getRadius() >= m_border.getShape()->getGlobalBounds().height) {
+    if (m_ball.getPosition().y + m_ball.getRadius() >= m_border.getShape()->getGlobalBounds().height) {
         m_game_state.decreaseHealth();
         m_paddle.setIsPressed(false);
     }
 }
 
-void PhysicsManager::checkPaddleBorderCollision(Paddle& m_paddle, Border& m_border)
+void PhysicsManager::checkPaddleBorderCollision()
 {
     const sf::Vector2f borderPos = m_border.getPosition();
     const sf::Vector2f borderSize = m_border.getShape()->getSize();
     const sf::Vector2f paddlePos = m_paddle.getPosition();
     const sf::Vector2f paddleSize = m_paddle.getShape()->getSize();
     float newPaddleX = std::max(borderPos.x, std::min(paddlePos.x, borderPos.x + borderSize.x - paddleSize.x));
-    if (newPaddleX != paddlePos.x)
-    {
+    if (newPaddleX != paddlePos.x) {
         m_paddle.setPosition(newPaddleX, paddlePos.y);
     }
 }

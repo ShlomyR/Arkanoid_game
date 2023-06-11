@@ -14,23 +14,22 @@ class GameResetter;
 class PhysicsManager 
 {
 public:
-    PhysicsManager(
-        Ball& ball
-        , Brick& brick
-        , Paddle& paddle
-        , Border& border
-        , GameState& game_state
-        , Points &points
-        , GameResetter &gameResetter
+    PhysicsManager(Ball&
+        , Brick&
+        , Paddle&
+        , Border&
+        , GameState&
+        , Points &
+        , GameResetter &
     );
-        void update(float deltaTime);
+        void update(float);
 private:
-    void checkPaddleCollision(Ball& ball, Paddle& paddle);
-    void checkBrickCollision(Ball& ball, Brick& brick,GameState& game_state);
-    void checkBorderCollision(Ball& ball, Border& border);
-    void checkPaddleBorderCollision(Paddle& paddle, Border& border);
-    float dotProduct(const sf::Vector2f& vec1, const sf::Vector2f& vec2);
-    sf::Vector2f reflect(const sf::Vector2f& vec, const sf::Vector2f& normal);
+    void checkPaddleBallCollision();
+    void checkBrickBallCollision();
+    void checkBorderBallCollision();
+    void checkPaddleBorderCollision();
+    float dotProduct(const sf::Vector2f&, const sf::Vector2f&);
+    sf::Vector2f reflect(const sf::Vector2f&, const sf::Vector2f&);
 private:
     Ball &m_ball;
     Brick &m_brick;
