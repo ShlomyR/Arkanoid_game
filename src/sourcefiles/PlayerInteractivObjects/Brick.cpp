@@ -29,6 +29,7 @@ void Brick::setPosition(float x, float y)
 
 void Brick::draw(sf::RenderWindow &window)
 {
+    // getCurrLevelBricks()[0][0][0].sprite.setPosition(sf::Vector2f(110.f,60.f));
     for (size_t i = 0; i < m_levels[m_currentLevel].size(); i++) {
         window.draw(m_levels[m_currentLevel][i].sprite);
     }
@@ -66,6 +67,11 @@ void Brick::initializeLevels()
     m_currentLevel = 0;
 }
 
+void Brick::initVec()
+{
+    m_gameState.getResoloution().setVec(BrickSetter::getInstance()->getBricks());   
+}
+
 void Brick::deleteBrick(int i)
 {
     SoundManager::getInstance()->playSound("src/sounds/pop2.ogg");
@@ -75,6 +81,11 @@ void Brick::deleteBrick(int i)
 BrickLevel Brick::getBrick(int i)
 {
     return m_levels[m_currentLevel][i];   
+}
+
+std::vector<std::vector<BrickLevel>>* Brick::getCurrLevelBricks()
+{
+    return &m_levels;   
 }
 
 bool Brick::isEmpty()

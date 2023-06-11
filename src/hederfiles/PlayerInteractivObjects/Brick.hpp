@@ -31,6 +31,8 @@ public:
     bool isEmpty();
     void setCurrLevel(int val);
     void deleteAllBricks();
+    std::vector<std::vector<BrickLevel>>* getCurrLevelBricks();
+    void initVec();
 private:
     Brick(Brick const& other) = delete;
     Brick operator=(Brick const& other) = delete;
