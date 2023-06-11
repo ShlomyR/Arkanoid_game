@@ -1,17 +1,28 @@
 #include "PaddleArrowsHandnling.hpp"
 
-PaddleArrowsHandnling::PaddleArrowsHandnling(Paddle &paddle)
+PaddleArrowsHandnling::PaddleArrowsHandnling(Paddle &paddle, ControlSettings &controlSettings)
 : m_paddle(paddle)
+, m_controlSettings(controlSettings)
 {}
 
 void PaddleArrowsHandnling::left()
 {
-    // m_paddle.move(-10,0);    
+    if (sf::Keyboard::isKeyPressed(m_controlSettings.getMapping("Left"))) {
+        m_paddle.move(-10, 0);
+    }
 }
 
 void PaddleArrowsHandnling::right()
 {
-    // m_paddle.move(10, 0);
+    if (sf::Keyboard::isKeyPressed(m_controlSettings.getMapping("Right"))) {
+        m_paddle.move(10, 0);
+    }
+}
+
+void PaddleArrowsHandnling::update()
+{
+    left();
+    right();
 }
 
 void PaddleArrowsHandnling::space()
