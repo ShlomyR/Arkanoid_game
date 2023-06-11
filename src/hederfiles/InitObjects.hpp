@@ -14,7 +14,6 @@
 #include "GameState.hpp"
 #include "GameStateUpdaterImpl.hpp"
 #include "Renderer.hpp"
-#include "Menu.hpp"
 #include "MouseButton.hpp"
 #include "PhysicsManager.hpp"
 #include "Hud.hpp"
@@ -24,6 +23,15 @@
 #include "Parser/BlockParser.hpp"
 #include "GameResetter.hpp"
 #include "Background.hpp"
+#include "Menu.hpp"
+#include "Options.hpp"
+#include "Difficulty.hpp"
+#include "Resoloution.hpp"
+#include "Video.hpp"
+#include "ControlSettings.hpp"
+#include "ControlSettingsMenu.hpp"
+#include "VolumeManager.hpp"
+#include "SquareWithBricks.hpp"
 
 class InitObjects
 {
@@ -35,14 +43,22 @@ public:
 
 private:
     WindowManager m_window;
+    ControlSettings m_controlSettings;
+    ControlSettingsMenu m_controlSettingsMenu;
+    SquareWithBricks m_squareWithBricks;
+    VolumeManager m_volumeManager;
     Border m_border;
     Paddle m_paddle;
     Ball m_ball;
-    GameState m_gameState;
+    Menu m_menu;
+    Options m_options;
+    Difficulty m_difficulty;
+    Video m_video;
     Brick m_brick;
     Points m_points;
-    Menu m_menu;
     Hud m_hud;
+    Resoloution m_resoloution;
+    GameState m_gameState;
     Background m_background;
     PaddleArrowsHandnling m_paddleKeys;
     std::unique_ptr<GameResetter> m_gameResetter;
