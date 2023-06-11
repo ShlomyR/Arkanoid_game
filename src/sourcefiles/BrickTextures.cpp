@@ -1,7 +1,7 @@
 #include "BrickTextures.hpp"
 #include "BrickSetter.hpp"
 
-#include "iostream"
+#include <iostream>
 
 BrickTextures::BrickTextures()
 {
@@ -123,7 +123,7 @@ void BrickTextures::generateSpriteBricks(std::vector<BrickLevel>& spriteBricks)
                         x = firstX;
                     }
                     sprite.setPosition(x, y);
-                    spriteBricks.push_back({x, y, std::get<1>(element_1), sprite});
+                    spriteBricks.push_back({std::get<1>(element_1), sprite});
                     if (std::get<2>(element_1) == "]") {
                         x += sprite.getGlobalBounds().width + 2.f;
                     } else {
@@ -134,7 +134,7 @@ void BrickTextures::generateSpriteBricks(std::vector<BrickLevel>& spriteBricks)
                 setTextureBasedOnColor(element_2, sprite);
                 for (int j = 0; j < std::get<0>(element_2); j++) {
                     sprite.setPosition(x, y);
-                    spriteBricks.push_back({x, y, std::get<1>(element_2), sprite});
+                    spriteBricks.push_back({std::get<1>(element_2), sprite});
                     if (std::get<2>(element_2) == "]") {
                         x += sprite.getGlobalBounds().width + 2.f;
                     } else {
@@ -146,7 +146,7 @@ void BrickTextures::generateSpriteBricks(std::vector<BrickLevel>& spriteBricks)
 
 
             sprite.setPosition(x, y);
-            spriteBricks.push_back({x, y, std::get<1>(element1), sprite});
+            spriteBricks.push_back({std::get<1>(element1), sprite});
             if (std::get<2>(element1) == "]") {
                 x += sprite.getGlobalBounds().width + 2.f;
             } else {
@@ -161,6 +161,5 @@ void BrickTextures::generateSpriteBricks(std::vector<BrickLevel>& spriteBricks)
             x += sprite.getGlobalBounds().width + 2.f;
         }
     }
-    
     BrickSetter::getInstance()->setBricks(spriteBricks);
 }
