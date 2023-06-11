@@ -14,7 +14,8 @@
                 "${workspaceFolder}/src/hederfiles",
                 "${workspaceFolder}/src/hederfiles",
                 "${workspaceFolder}/src/hederfiles",
-                "${workspaceFolder}/src/hederfiles/Interfaces"
+                "${workspaceFolder}/src/hederfiles/Interfaces",
+                "${workspaceFolder}/src/hederfiles"
             ],
             "defines": [],
             "cStandard": "c17",
