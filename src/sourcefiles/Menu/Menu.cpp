@@ -1,5 +1,6 @@
 #include "Menu.hpp"
 #include "PlayOption.hpp"
+#include "OptionsOption.hpp"
 #include "HighScoreOption.hpp"
 #include "ExitOption.hpp"
 #include "GameState.hpp"
@@ -9,9 +10,9 @@
 Menu::Menu(WindowManager& windowManager,GameState &gameState)
     : m_windowManager(windowManager)
     , m_gameState(gameState)
-    , m_isMenuShown(false)
-{
-    addOptions(std::make_unique<PlayOption>(),std::make_unique<HighScoreOption>(),std::make_unique<ExitOption>());
+    , m_isMenuShown(true)
+{    
+    addOptions(std::make_unique<PlayOption>(), std::make_unique<HighScoreOption>(), std::make_unique<OptionsOption>(), std::make_unique<ExitOption>());
     for (int i = 0; i < getOptionSize(); ++i) {
         getOption(i)->makeButton(m_windowManager.getRenderWindow());
     }
@@ -44,27 +45,31 @@ int Menu::getOptionSize() const
     return m_options.size();
 }
 
-bool Menu::getIsMenuShown() const
+bool Menu::getIsMenuPageShown() const
 {
     return m_isMenuShown;
 }
 
-void Menu::setIsMenuShown(bool value)
+void Menu::setIsMenuPageShown(bool value)
 {
     m_isMenuShown = value;
+}
+
+void Menu::setIsSelected()
+{
     for (size_t i = 0; i < m_options.size(); ++i) {
         m_options[i]->setIsSelected(true);
     }
-    
 }
 
-sf::Text Menu::getText()
+sf::Text* Menu::getText(int i)
 {
-    sf::Text tmpText;
-    for (size_t i = 0; i < m_options.size(); ++i) {
-        tmpText = m_options[i]->getText();
-    }
-    return tmpText;
+    return m_options[i]->getText();
+}
+
+std::vector<std::shared_ptr<MenuOption>> Menu::getTexts()
+{
+    return m_options;
 }
 
 template <typename... Args>
