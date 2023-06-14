@@ -70,20 +70,31 @@ void Resoloution::changeResolution(sf::VideoMode videoMode)
 
 void Resoloution::setPositionsWithOffset(std::vector<std::shared_ptr<MenuOption>> texts, const sf::Vector2u &windowSize, int offset)
 {
-    int size = -200;
-    for (size_t i = 0; i < texts.size(); i++) {
-        std::cout << "size:" << size << "\n";
-        sf::Text* text = texts.at(i)->getText();
-        sf::Vector2f buttonPos = sf::Vector2f(windowSize.x / 2 - text->getGlobalBounds().width / 2, windowSize.y / 2 + size);
-        text->setPosition(buttonPos);
-        size += offset;
+    if (offset == 100) {
+        int size = -200;
+        offset = 100;
+        for (size_t i = 0; i < texts.size(); i++) {
+            sf::Text* text = texts.at(i)->getText();
+            sf::Vector2f buttonPos = sf::Vector2f(windowSize.x / 2 - text->getGlobalBounds().width / 2, windowSize.y / 2 + size);
+            text->setPosition(buttonPos);
+            size += offset;
+        }
+    } else {
+        int size = -250;
+        offset = 100;
+        for (size_t i = 0; i < texts.size(); i++) {
+            sf::Text* text = texts.at(i)->getText();
+            sf::Vector2f buttonPos = sf::Vector2f(windowSize.x / 2 - text->getGlobalBounds().width / 2, windowSize.y / 2 + size);
+            text->setPosition(buttonPos);
+            size += offset;
+        }
     }
 }
 
 void Resoloution::updateTextPositions(const sf::Vector2u &windowSize)
 {
     setPositionsWithOffset(m_menu.getTexts(), windowSize, 100);
-    setPositionsWithOffset(m_options.getTexts(), windowSize, 100);
+    setPositionsWithOffset(m_options.getTexts(), windowSize, 200);
     setPositionsWithOffset(m_difficulty.getTexts(), windowSize, 100);
     setPositionsWithOffset(m_video.getTexts(), windowSize, 100);
     m_volume.updateText(windowSize);
