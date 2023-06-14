@@ -14,8 +14,10 @@ Arkoined Brick Style Game is a classic arcade game inspired by the popular brick
 ## Installation
 
 1. Clone the repository:
-2. Compile the source code using a make.
-3. then ./main enjuy!!!.
+2. Compile the source code using a Cmake.
+3. In the terminal run "cmake .".
+4. Then run "make".
+5. then ./main enjuy!!!.
 
 
 ## Usage
