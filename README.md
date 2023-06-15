@@ -13,12 +13,71 @@ Arkoined Brick Style Game is a classic arcade game inspired by the popular brick
 
 ## Installation
 
-1. Clone the repository:
+### Linux OS:
+1. Clone the repository.
+    * 1.1. if you don't have Cmake installed:
+    ```sh
+    sudo apt update
+    sudo apt install cmake
+    ```
 2. Compile the source code using a Cmake.
 3. In the terminal run "cmake .".
 4. Then run "make".
-5. then ./main enjuy!!!.
+5. Then "./main' enjoy!!!.
 
+### Mac OS:
+1. Clone the repository.
+    * 1.1. if you don't have brew installed install it by using the following command:
+     ```sh
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    ```
+    * 1.2. to install Cmake using brew:
+     ```sh
+    brew install cmake
+    ```
+    
+2. Compile the source code using a Cmake.
+3. In the terminal run "cmake .".
+4. Then run "make".
+5. Then "./main" enjoy!!!.
+
+if you have an error of - `We got a Keyboard without any keys (1)` .
+
+to fix it go to `System Setting`-->`Privacy & Security`-->`Input Monitoring` and allow your application in this section for example: `IDE VS code`.
+
+### Windows OS:
+1. Clone the repository.
+    * 1.1. if you don't have Cmake installed:
+    To install CMake on Windows, you can follow these steps:
+
+        1.2. Visit the CMake download page: https://cmake.org/download/.
+
+        1.3. Scroll down to the "Binary distributions" section and find the "Windows" subsection.
+
+        1.4. Download the "Windows win64-x64 Installer" if you have a 64-bit Windows installation.If you have a 32-bit Windows installation, download the "Windows win32-x86 Installer".
+
+        1.5. Run the downloaded installer.
+
+        1.6. In the installer, select the "Add CMake to the system PATH for all users" option. This will allow you to use CMake from any directory in the command prompt.
+
+        1.7. Choose the installation directory for CMake. The default location is usually fine.
+
+        1.8. Click "Next" to proceed with the installation.
+        
+        1.9. On the next screen, you can optionally choose to create desktop and start menu shortcuts for CMake.
+
+        1.10. Click "Install" to start the installation process.
+
+        1.11. Once the installation is complete, you can click "Finish" to exit the installer.
+
+        After installing CMake, you can verify that it is correctly installed by opening a command prompt and running the following command:
+        ```sh
+        cmake --version
+        ```
+2. Compile the source code using a Cmake.
+3. In the terminal run "cmake .".
+4. Then run "make".
+5. Then "./main' enjoy!!!.
 
 ## Usage
 
