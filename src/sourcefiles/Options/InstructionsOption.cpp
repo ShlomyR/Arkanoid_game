@@ -10,7 +10,7 @@ void InstructionsOption::draw(sf::RenderWindow& window)
     window.draw(m_instructionsText);
 }
 
-bool InstructionsOption::handleInput(InputHandler& inputHandler, GameState &)
+bool InstructionsOption::handleInput(InputHandler& , GameState &)
 {
     // bool mouseHover = m_instructionsText.getGlobalBounds().contains(inputHandler.getMousePosition());
     bool mouseHover = false;
