@@ -4,9 +4,9 @@ Arkoined Brick Style Game is a classic arcade game inspired by the popular brick
 
 ## Features
 
-- Intuitive paddle control using keyboard or mouse.
+- Intuitive paddle control using keyboard.
 - Physics-based ball movement and collision detection.
-- Different types of bricks with varying strength and point values.
+- Different types of bricks with varying point values.
 - 3 levels with increasing difficulty.
 - Score tracking and high score leaderboard.
 - Sound effects and visual effects for an immersive experience.
