@@ -72,6 +72,7 @@ if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
         /opt/homebrew/Cellar/sfml/2.5.1_2/lib/libsfml-audio.dylib
         /opt/homebrew/Cellar/boost/1.82.0/lib/libboost_filesystem.dylib
     )
+
 elseif (CMAKE_SYSTEM_NAME MATCHES "Linux")
     target_include_directories(${PROJECT_NAME} PRIVATE
         ${HEADER_DIR} 

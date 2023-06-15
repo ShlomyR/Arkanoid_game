@@ -12,6 +12,16 @@
 #include <thread>
 #include <fstream>
 
+#ifdef _WIN32
+    #define NEWLINE_CHAR '\r'  // Windows uses '\r\n'
+#elif defined(__APPLE__)
+    #define NEWLINE_CHAR '\n'  // macOS uses '\n'
+#elif defined(__linux__)
+    #define NEWLINE_CHAR '\r'  // Linux uses '\n'
+#else
+    #error Unsupported operating system
+#endif
+
 void deleteKeysExceptEscape(std::unordered_map<sf::Keyboard::Key, std::function<void ()>>& keyMap) {
     auto it = keyMap.begin();
     while (it != keyMap.end()) {
@@ -301,7 +311,7 @@ std::string InputHandlerImpl::keyToString(sf::Keyboard::Key key)
 
 void InputHandlerImpl::checkEventUnderTenCharacter()
 {
-    if (m_event.text.unicode < 128 && m_event.text.unicode != '\b' && m_event.text.unicode != '\r') {
+    if (m_event.text.unicode < 128 && m_event.text.unicode != '\b' && m_event.text.unicode != NEWLINE_CHAR) {
         if (m_hud.getName().length() < 10) {
             m_hud.getName() += static_cast<char>(m_event.text.unicode);
             m_hud.getInputText().setString(m_hud.getName());
@@ -354,7 +364,7 @@ void InputHandlerImpl::updateHighScoreInFile()
 
 void InputHandlerImpl::checkEventEnterName()
 {
-    if (m_event.text.unicode == '\r') {
+    if (m_event.text.unicode == NEWLINE_CHAR) {
         std::cout << "Nice!!!" << "\n";
         updateHighScoreInFile();
         m_gameState.setState(State::HighScorePage);
