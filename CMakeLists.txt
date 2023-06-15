@@ -45,28 +45,58 @@ file(GLOB_RECURSE HEADER_VIDEO ${HEADER_DIR_VIDEO}/*.hpp)
 
 add_executable(${PROJECT_NAME} ${MAIN} ${SOURCE}  ${HEADER})
 
-target_include_directories(${PROJECT_NAME} PRIVATE
-    ${HEADER_DIR} 
-    ${HEADER_DIR_COMMAND}
-    ${HEADER_DIR_INTERFACES} 
-    ${HEADER_DIR_PARSER} 
-    ${HEADER_DIR_INPUT_LOGIC}  
-    ${HEADER_DIR_MENU}  
-    ${HEADER_DIR_PLAYER_INTERACTIV_OBJ}  
-    ${HEADER_DIR_SCORE_LOGIC}  
-    ${HEADER_DIR_OPTIONS}  
-    ${HEADER_DIR_DIFFICULTY} 
-    ${HEADER_DIR_VIDEO}
-    ${HEADER_DIR_MAIN}
-)
+# Check if the system is macOS
+if (CMAKE_SYSTEM_NAME MATCHES "Darwin") 
+    target_include_directories(${PROJECT_NAME} PRIVATE
+        ${HEADER_DIR} 
+        ${HEADER_DIR_COMMAND}
+        ${HEADER_DIR_INTERFACES} 
+        ${HEADER_DIR_PARSER} 
+        ${HEADER_DIR_INPUT_LOGIC}  
+        ${HEADER_DIR_MENU}  
+        ${HEADER_DIR_PLAYER_INTERACTIV_OBJ}  
+        ${HEADER_DIR_SCORE_LOGIC}  
+        ${HEADER_DIR_OPTIONS}  
+        ${HEADER_DIR_DIFFICULTY} 
+        ${HEADER_DIR_VIDEO}
+        ${HEADER_DIR_MAIN}
+        /opt/homebrew/Cellar/sfml/2.5.1_2/include
+        /opt/homebrew/Cellar/boost/1.82.0/include
+    )
+    # Add your library dependencies here
+    target_link_libraries(${PROJECT_NAME}
+        pthread
+        /opt/homebrew/Cellar/sfml/2.5.1_2/lib/libsfml-graphics.dylib
+        /opt/homebrew/Cellar/sfml/2.5.1_2/lib/libsfml-window.dylib
+        /opt/homebrew/Cellar/sfml/2.5.1_2/lib/libsfml-system.dylib
+        /opt/homebrew/Cellar/sfml/2.5.1_2/lib/libsfml-audio.dylib
+        /opt/homebrew/Cellar/boost/1.82.0/lib/libboost_filesystem.dylib
+    )
+elseif (CMAKE_SYSTEM_NAME MATCHES "Linux")
+    target_include_directories(${PROJECT_NAME} PRIVATE
+        ${HEADER_DIR} 
+        ${HEADER_DIR_COMMAND}
+        ${HEADER_DIR_INTERFACES} 
+        ${HEADER_DIR_PARSER} 
+        ${HEADER_DIR_INPUT_LOGIC}  
+        ${HEADER_DIR_MENU}  
+        ${HEADER_DIR_PLAYER_INTERACTIV_OBJ}  
+        ${HEADER_DIR_SCORE_LOGIC}  
+        ${HEADER_DIR_OPTIONS}  
+        ${HEADER_DIR_DIFFICULTY} 
+        ${HEADER_DIR_VIDEO}
+        ${HEADER_DIR_MAIN}
+    )
+
+    # Add your library dependencies here
+    target_link_libraries(${PROJECT_NAME}
+        pthread
+        sfml-graphics
+        sfml-window
+        sfml-system
+        sfml-audio
+        boost_filesystem
+    )
     
-# Add your library dependencies here
-target_link_libraries(${PROJECT_NAME}
-    pthread
-    sfml-graphics
-    sfml-window
-    sfml-system
-    sfml-audio
-    boost_filesystem
-)
+endif()
 
