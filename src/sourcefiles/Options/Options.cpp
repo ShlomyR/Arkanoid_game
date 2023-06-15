@@ -8,9 +8,8 @@
 
 #include <memory>
 
-Options::Options(WindowManager& windowManager,GameState &gameState)
+Options::Options(WindowManager& windowManager)
     : m_windowManager(windowManager)
-    , m_gameState(gameState)
     , m_isOptionsPageShown(false)
 {
     addOptions(std::make_unique<SoundOption>(), std::make_unique<ControlsOption>(), std::make_unique<DifficultyOption>(), std::make_unique<InstructionsOption>(), std::make_unique<VideoOption>());

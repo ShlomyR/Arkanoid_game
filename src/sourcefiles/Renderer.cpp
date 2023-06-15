@@ -1,5 +1,4 @@
 #include "Renderer.hpp"
-#include "PhysicsManager.hpp"
 #include "Hud.hpp"
 #include "Paddle.hpp"
 #include "Ball.hpp"
@@ -18,7 +17,6 @@ RendererImpl::RendererImpl(WindowManager &window
     , Options &options
     , Difficulty &difficulty
     , Video &video
-    , PhysicsManager &physicsManager
     , Hud &hud
     , Paddle &paddle
     , Ball &ball
@@ -34,7 +32,6 @@ RendererImpl::RendererImpl(WindowManager &window
 , m_options(options)
 , m_difficulty(difficulty)
 , m_video(video)
-, m_physicsManager(physicsManager)
 , m_hud(hud)
 , m_paddle(paddle)
 , m_ball(ball)

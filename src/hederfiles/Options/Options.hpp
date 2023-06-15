@@ -3,7 +3,6 @@
 #include "MenuOption.hxx"
 #include "WindowManager.hpp"
 
-class GameState;
 class InputManager;
 
 #include <memory>
@@ -11,7 +10,7 @@ class InputManager;
 class Options
 {
 public:
-    Options(WindowManager& , GameState &);
+    Options(WindowManager&);
     void drew();
     int handleInput(InputHandler& , GameState &);
 
@@ -28,7 +27,6 @@ public:
 
 private:
     WindowManager& m_windowManager;
-    GameState &m_gameState;
     std::vector<std::shared_ptr<MenuOption>> m_options;
     bool m_isOptionsPageShown;
 };

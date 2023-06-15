@@ -2,19 +2,16 @@
 #include "MouseButton.hpp"
 #include "Difficulty.hpp"
 #include "Video.hpp"
-#include "GameState.hpp"
 #include "Options.hpp"
 #include "Menu.hpp"
 
 #include <iostream>
 
-MouseButton::MouseButton(sf::RenderWindow &window, Menu &menu, Options &options, Difficulty &difficulty, Video &video, GameState &gameState)
-: m_window(window)
-, m_menu(menu)
+MouseButton::MouseButton(Menu &menu, Options &options, Difficulty &difficulty, Video &video)
+: m_menu(menu)
 , m_options(options)
 , m_difficulty(difficulty)
 , m_video(video)
-, m_gameState(gameState)
 {}
 
 void MouseButton::left(bool const& value)

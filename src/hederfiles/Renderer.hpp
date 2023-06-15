@@ -2,7 +2,6 @@
 #include "GameState.hpp"
 #include "Menu.hpp"
 
-class PhysicsManager;
 class Hud;
 class Paddle;
 class Ball;
@@ -24,7 +23,6 @@ public:
         , Options &
         , Difficulty &
         , Video &
-        , PhysicsManager &
         , Hud &
         , Paddle &
         , Ball &
@@ -43,7 +41,6 @@ private:
     Options &m_options;
     Difficulty &m_difficulty;
     Video &m_video;
-    PhysicsManager &m_physicsManager;
     Hud &m_hud;
     Paddle &m_paddle;
     Ball &m_ball;

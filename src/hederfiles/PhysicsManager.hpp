@@ -8,7 +8,6 @@ class Border;
 class Paddle;
 class GameState;
 class Points;
-class GameResetter;
 
 
 class PhysicsManager 
@@ -20,7 +19,6 @@ public:
         , Border&
         , GameState&
         , Points &
-        , GameResetter &
     );
         void update(float);
 private:
@@ -37,8 +35,6 @@ private:
     Border &m_border;
     GameState &m_game_state;
     Points &m_points;
-    GameResetter &m_gameResetter;
 
-    float m_deltaTime;
     float m_ballSpeed;
 };

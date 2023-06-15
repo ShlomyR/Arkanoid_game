@@ -6,12 +6,10 @@
 
 #include <memory>
 
-Difficulty::Difficulty(WindowManager& windowManager,GameState &gameState)
+Difficulty::Difficulty(WindowManager& windowManager)
     : m_windowManager(windowManager)
-    , m_gameState(gameState)
     , m_isDifficultyPageShown(false)
 {
-    // m_isTranslucent = false;
     addOptions(std::make_unique<EasyOption>(), std::make_unique<MediumOption>(), std::make_unique<HardOption>());
     for (size_t i = 0; i < m_options.size(); ++i) {
         m_options[i]->makeButton(m_windowManager.getRenderWindow());

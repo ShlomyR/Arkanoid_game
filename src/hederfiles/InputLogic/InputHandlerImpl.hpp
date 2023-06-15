@@ -54,7 +54,6 @@ private:
     void updateKeyPressedControlSettingPage();
     bool m_isSelected;
     static bool m_isMusicPlayed;
-    int count = 0;
     
     sf::Vector2f m_mousePosition;
     sf::Event m_event;

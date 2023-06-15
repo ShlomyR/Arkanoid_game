@@ -11,7 +11,7 @@ class InputManager;
 class Difficulty
 {
 public:
-    Difficulty(WindowManager& , GameState &);
+    Difficulty(WindowManager&);
     void drew();
     int handleInput(InputHandler& , GameState &);
 
@@ -29,8 +29,6 @@ public:
 
 private:
     WindowManager& m_windowManager;
-    GameState &m_gameState;
     std::vector<std::shared_ptr<MenuOption>> m_options;
     bool m_isDifficultyPageShown;
-    bool m_isTranslucent;
 };

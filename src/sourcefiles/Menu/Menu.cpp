@@ -7,9 +7,8 @@
 
 #include <memory>
 
-Menu::Menu(WindowManager& windowManager,GameState &gameState)
+Menu::Menu(WindowManager& windowManager)
     : m_windowManager(windowManager)
-    , m_gameState(gameState)
     , m_isMenuShown(true)
 {    
     addOptions(std::make_unique<PlayOption>(), std::make_unique<HighScoreOption>(), std::make_unique<OptionsOption>(), std::make_unique<ExitOption>());

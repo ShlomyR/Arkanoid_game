@@ -5,7 +5,6 @@
 #include "Paddle.hpp"
 #include "GameState.hpp"
 #include "Points.hpp"
-#include "GameResetter.hpp"
 
 PhysicsManager::PhysicsManager(Ball& ball
     , Brick& brick
@@ -13,7 +12,6 @@ PhysicsManager::PhysicsManager(Ball& ball
     , Border& border
     , GameState& game_state
     , Points &points
-    , GameResetter &gameResetter
 )
 : m_ball(ball)
 , m_brick(brick)
@@ -21,7 +19,6 @@ PhysicsManager::PhysicsManager(Ball& ball
 , m_border(border)
 , m_game_state(game_state)
 , m_points(points)
-, m_gameResetter(gameResetter)
 , m_ballSpeed(200.f)
 {}
 

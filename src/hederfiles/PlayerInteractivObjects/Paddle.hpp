@@ -22,6 +22,4 @@ public:
 private:
     std::shared_ptr<sf::RectangleShape> m_shape;
     bool m_isPressed = false;
-    bool m_paused = false;
-    float m_speed = 10;
 };

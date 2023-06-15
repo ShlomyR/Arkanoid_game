@@ -56,7 +56,7 @@ InputHandlerImpl::InputHandlerImpl(sf::RenderWindow &window
 , m_controlSettingsMenu(controlSettingsMenu)
 , m_volume(volume)
 , m_WindowArrowsKey(m_window,m_gameState)
-, m_mouse(m_window,m_menu,options,m_difficulty,m_video,gameState)
+, m_mouse(m_menu,options,m_difficulty,m_video)
 {
     initMap();
     m_isSelected = false;
@@ -65,7 +65,6 @@ InputHandlerImpl::InputHandlerImpl(sf::RenderWindow &window
 
 void InputHandlerImpl::handleInput()
 {
-    //auto it = keys_action_map.end();
     while (m_window.pollEvent(m_event)) {
         switch (m_event.type) {
             case sf::Event::Closed:
