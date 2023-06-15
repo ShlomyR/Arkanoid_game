@@ -12,7 +12,7 @@ InitObjects::InitObjects(sf::Vector2u windowSize, std::string windowTitle, int s
     , m_menu(m_window)
     , m_options(m_window)
     , m_difficulty(m_window)
-    , m_video(m_window, m_gameState)
+    , m_video(m_window)
     , m_brick(sf::Vector2f(25.f, 10.f), sf::Vector2f(windowSize.x / 2.f - 50, windowSize.y - 40), sf::Color::Yellow,m_gameState)
     , m_points(m_gameState)
     , m_hud(m_window.getRenderWindow())

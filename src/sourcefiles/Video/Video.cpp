@@ -6,9 +6,8 @@
 
 #include <memory>
 
-Video::Video(WindowManager& windowManager,GameState &gameState)
+Video::Video(WindowManager& windowManager)
     : m_windowManager(windowManager)
-    , m_gameState(gameState)
     , m_isVideoPageShown(false)
 {
     addOptions(std::make_unique<FullScreen>(), std::make_unique<ResX800>(), std::make_unique<ResX1024>());
