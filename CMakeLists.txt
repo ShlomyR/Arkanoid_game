@@ -1,19 +1,18 @@
 cmake_minimum_required(VERSION 3.12)
 set(CMAKE_C_COMPILER gcc)
 project(main)
-set(SFML_DIR "C:/lib/SFML/lib/cmake/SFML")
-
-set(BOOST_DIR "C:/lib/BOOST/lib/cmake/boost_filesystem-1.82.0")
-
-find_package(SFML 2.4 REQUIRED COMPONENTS system window graphics network audio)
-
-find_package(Boost 1.8 REQUIRED COMPONENTS filesystem system)
 
 
 set(CMAKE_CXX_STANDARD 17)
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    set(SFML_DIR "C:/lib/SFML/lib/cmake/SFML")
+    set(BOOST_DIR "C:/lib/BOOST/lib/cmake/boost_filesystem-1.82.0")
+
+    find_package(SFML 2.4 REQUIRED COMPONENTS system window graphics network audio)
+
+    find_package(Boost 1.8 REQUIRED COMPONENTS filesystem system)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4 -O2") 
 endif()
 

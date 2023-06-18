@@ -145,18 +145,16 @@ to fix it go to `System Setting`-->`Privacy & Security`-->`Input Monitoring` and
     also when finish put this in the terminal `pacman -S mingw-w64-x86_64-boost`
 10. close terminal when finished then go to boost folder that you extracted in lib folder and pressed on bootstrap wait until it finished
     then pressed om the b2 file wait until it finished (taking like 5-10 min) it will add a folder by the name stage.
-    ```sh
-
-    ```
+ 
 11. now to the fun part of using windows (not really :\ ) :
     in windows 10 pressed on the search from the bottom bar and type `edit environment variables for your account`
     on the above section pressed double click on `Path`.
-    pressed on the `new` button and add the directory `C:\msys64\mingw64\bin`
-    and also pressed on the `new` button again and add the directory `C:\lib\SFML-2.5.1\bin`
-    and also pressed on the `new` button again and add the directory `C:\lib\SFML-2.5.1\include`
-    and also pressed on the `new` button again and add the directory `C:\lib\Boost-1_82_0\stage\lib\cmake\boost_filesystem-1.82.0`
-    and also pressed on the `new` button again and add the directory `C:\lib\Boost-1_82_0\stage\lib`
-    and also pressed on the `new` button again and add the directory `C:\lib\Boost-1_82_01`
+    - pressed on the `new` button and add the directory `C:\msys64\mingw64\bin`
+    - and also pressed on the `new` button again and add the directory `C:\lib\SFML-2.5.1\bin`
+    - and also pressed on the `new` button again and add the directory `C:\lib\SFML-2.5.1\include`
+    - and also pressed on the `new` button again and add the directory `C:\lib\Boost-1_82_0\stage\lib\cmake\boost_filesystem-1.82.0`
+    - and also pressed on the `new` button again and add the directory `C:\lib\Boost-1_82_0\stage\lib`
+    - and also pressed on the `new` button again and add the directory `C:\lib\Boost-1_82_01`
 12. In the terminal run `cmake -G "MinGW Makefiles" .` .
 13. Then run `mingw32-make` .
 14. Then `.\main` enjoy!!!.
