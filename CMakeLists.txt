@@ -1,8 +1,22 @@
 cmake_minimum_required(VERSION 3.12)
+set(CMAKE_C_COMPILER gcc)
 project(main)
+set(SFML_DIR "C:/lib/SFML/lib/cmake/SFML")
+
+set(BOOST_DIR "C:/lib/BOOST/lib/cmake/boost_filesystem-1.82.0")
+
+find_package(SFML 2.4 REQUIRED COMPONENTS system window graphics network audio)
+
+find_package(Boost 1.8 REQUIRED COMPONENTS filesystem system)
+
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O2 -Wextra")
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4 -O2") 
+endif()
+
 
 # Set the directories for source and header files
 set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
@@ -97,6 +111,33 @@ elseif (CMAKE_SYSTEM_NAME MATCHES "Linux")
         sfml-system
         sfml-audio
         boost_filesystem
+    )
+
+# Check if the system is Windows
+elseif (CMAKE_SYSTEM_NAME MATCHES "Windows")
+    target_include_directories(${PROJECT_NAME} PRIVATE
+        ${HEADER_DIR}
+        ${HEADER_DIR_COMMAND}
+        ${HEADER_DIR_INTERFACES}
+        ${HEADER_DIR_PARSER}
+        ${HEADER_DIR_INPUT_LOGIC}
+        ${HEADER_DIR_MENU}
+        ${HEADER_DIR_PLAYER_INTERACTIV_OBJ}
+        ${HEADER_DIR_SCORE_LOGIC}
+        ${HEADER_DIR_OPTIONS}
+        ${HEADER_DIR_DIFFICULTY}
+        ${HEADER_DIR_VIDEO}
+        ${HEADER_DIR_MAIN}
+        C:/lib/BOOST
+        C:/msys64/mingw64/bin
+        C:/lib/SFML/include
+        C:/lib/SFML/bin
+
+    )
+
+    # Add your library dependencies here
+    target_link_libraries(${PROJECT_NAME}
+        sfml-graphics sfml-system sfml-window sfml-audio C:/msys64/mingw64/bin/libboost_filesystem-mt.dll
     )
     
 endif()
