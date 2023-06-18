@@ -1,8 +1,10 @@
 {
     "cSpell.words": [
         "geter",
+        "msys",
         "Numpad",
-        "seter"
+        "seter",
+        "sfml"
     ],
     "files.associations": {
         "*.ejs": "html",
