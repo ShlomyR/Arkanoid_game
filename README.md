@@ -45,53 +45,6 @@ if you have an error of - `We got a Keyboard without any keys (1)` .
 
 to fix it go to `System Setting`-->`Privacy & Security`-->`Input Monitoring` and allow your application in this section for example: `IDE VS code`.
 
-# Arkoined Brick Style Game
-
-Arkoined Brick Style Game is a classic arcade game inspired by the popular brick-breaking games of the past. The objective of the game is to control a paddle and use it to bounce a ball, breaking bricks that are arranged in various patterns. The player must aim to clear all the bricks on the screen while preventing the ball from falling off the bottom of the screen.
-
-## Features
-
-- Intuitive paddle control using keyboard.
-- Physics-based ball movement and collision detection.
-- Different types of bricks with varying point values.
-- 3 levels with increasing difficulty.
-- Score tracking and high score leaderboard.
-- Sound effects and visual effects for an immersive experience.
-
-## Installation
-
-### Linux OS:
-1. Clone the repository.
-    * 1.1. if you don't have Cmake installed:
-    ```sh
-    sudo apt update
-    sudo apt install cmake
-    ```
-2. Compile the source code using a Cmake.
-3. In the terminal run "cmake .".
-4. Then run "make".
-5. Then "./main' enjoy!!!.
-
-### Mac OS:
-1. Clone the repository.
-    * 1.1. if you don't have brew installed install it by using the following command:
-     ```sh
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    ```
-    * 1.2. to install Cmake using brew:
-     ```sh
-    brew install cmake
-    ```
-    
-2. Compile the source code using a Cmake.
-3. In the terminal run "cmake .".
-4. Then run "make".
-5. Then "./main" enjoy!!!.
-
-if you have an error of - `We got a Keyboard without any keys (1)` .
-
-to fix it go to `System Setting`-->`Privacy & Security`-->`Input Monitoring` and allow your application in this section for example: `IDE VS code`.
-
 ### Windows OS:
 1. Clone the repository.
     * 1.1. if you don't have Cmake installed:
@@ -158,6 +111,19 @@ to fix it go to `System Setting`-->`Privacy & Security`-->`Input Monitoring` and
 12. In the terminal run `cmake -G "MinGW Makefiles" .` .
 13. Then run `mingw32-make` .
 14. Then `.\main` enjoy!!!.
+
+# Arkoined Brick Style Game
+
+Arkoined Brick Style Game is a classic arcade game inspired by the popular brick-breaking games of the past. The objective of the game is to control a paddle and use it to bounce a ball, breaking bricks that are arranged in various patterns. The player must aim to clear all the bricks on the screen while preventing the ball from falling off the bottom of the screen.
+
+## Features
+
+- Intuitive paddle control using keyboard.
+- Physics-based ball movement and collision detection.
+- Different types of bricks with varying point values.
+- 3 levels with increasing difficulty.
+- Score tracking and high score leaderboard.
+- Sound effects and visual effects for an immersive experience.
 
 ## Usage
 
