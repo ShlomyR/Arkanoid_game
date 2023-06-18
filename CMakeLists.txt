@@ -8,7 +8,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     set(SFML_DIR "C:/lib/SFML/lib/cmake/SFML")
-    set(BOOST_DIR "C:/lib/BOOST/lib/cmake/boost_filesystem-1.82.0")
+    set(BOOST_DIR "C:/lib/BOOST/stage/lib/cmake/boost_filesystem-1.82.0")
 
     find_package(SFML 2.4 REQUIRED COMPONENTS system window graphics network audio)
 
