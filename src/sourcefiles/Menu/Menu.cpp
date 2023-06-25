@@ -4,14 +4,17 @@
 #include "HighScoreOption.hpp"
 #include "ExitOption.hpp"
 #include "GameState.hpp"
+#include "MenuScreenHandler.hpp"
 
 #include <memory>
 
-Menu::Menu(WindowManager& windowManager)
+Menu::Menu(WindowManager& windowManager,MenuScreenHandler& menuScreenHandler)
     : m_windowManager(windowManager)
+    , m_menuScreenHandler(menuScreenHandler)
     , m_isMenuShown(true)
 {    
     addOptions(std::make_unique<PlayOption>(), std::make_unique<HighScoreOption>(), std::make_unique<OptionsOption>(), std::make_unique<ExitOption>());
+    initBorder();
     for (int i = 0; i < getOptionSize(); ++i) {
         getOption(i)->makeButton(m_windowManager.getRenderWindow());
     }
@@ -39,6 +42,11 @@ std::shared_ptr<MenuOption> &Menu::getOption(int index)
     return m_options.at(index);
 }
 
+const std::vector<std::shared_ptr<MenuOption>>& Menu::getOptions() const
+{
+    return m_options;
+}
+
 int Menu::getOptionSize() const
 {
     return m_options.size();
@@ -61,6 +69,14 @@ void Menu::setIsSelected()
     }
 }
 
+void Menu::initBorder()
+{
+    auto tmpBox = m_menuScreenHandler.getOptionsBoxShape();
+    for (size_t i = 0; i < m_options.size(); ++i) {
+        m_options[i]->setBoxBorder(tmpBox);
+    }
+}
+
 sf::Text* Menu::getText(int i)
 {
     return m_options[i]->getText();
@@ -69,6 +85,11 @@ sf::Text* Menu::getText(int i)
 std::vector<std::shared_ptr<MenuOption>> Menu::getTexts()
 {
     return m_options;
+}
+
+MenuScreenHandler Menu::getMenuScreen()
+{
+    return m_menuScreenHandler;
 }
 
 template <typename... Args>
