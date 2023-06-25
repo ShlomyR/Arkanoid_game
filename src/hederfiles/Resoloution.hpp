@@ -22,6 +22,8 @@ class VolumeManager;
 #include "iostream"
 #include <memory>
 
+class MenuScreenHandler;
+
 
 class Resoloution
 {
@@ -37,6 +39,7 @@ public:
         , Video&
         , ControlSettingsMenu &
         , VolumeManager &
+        , MenuScreenHandler &
     );
     void updateLayout(const sf::Vector2u&);
     void changeResolution(sf::VideoMode);
@@ -64,5 +67,6 @@ private:
     static int m_count;
     sf::Vector2f m_initialWindowSize;
     sf::Vector2f m_firstBrickPos;
+    MenuScreenHandler &m_menuScreenHandler;
     std::vector<std::vector<BrickLevel>> m_brickVecPos;
 };
