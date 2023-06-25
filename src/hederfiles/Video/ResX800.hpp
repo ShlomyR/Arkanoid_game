@@ -13,9 +13,12 @@ public:
     void setIsSelected(bool) override;
     sf::Text* getText() override;
     void setIsTranslucent(bool value) override;
+    void setBoxBorder(sf::RectangleShape&) override;
+    void updateColor(sf::Text&, sf::Color);
 private:
     sf::Text m_resX800Text;
     bool m_isSelected = false;
     static bool m_isMusicPlayed;
     bool m_isTranslucent = false;
+    sf::RectangleShape m_boxBorder;
 };
