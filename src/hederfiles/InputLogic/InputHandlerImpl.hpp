@@ -17,6 +17,7 @@ class Options;
 class Difficulty;
 class Video;
 class VolumeManager;
+class MenuScreenHandler;
 
 
 class InputHandlerImpl : public InputHandler
@@ -32,6 +33,7 @@ public:
         , Hud &
         , ControlSettingsMenu &
         , VolumeManager &
+        , MenuScreenHandler &
     );
 
     void handleInput() override;
@@ -42,6 +44,8 @@ private:
     void initMap();
     void performKeyAction(sf::Event);
     void performMouseAction(sf::Event);
+    void performPs4Action(sf::Event);
+    void performPs4AxisAction(sf::Event);
     std::string keyToString(sf::Keyboard::Key );
     void printVector(std::unordered_map<sf::Keyboard::Key, std::function<void ()>>& );
 private:
@@ -52,6 +56,7 @@ private:
     void updateKeyMap();
     void updateMouseMovedControlSettingPage();
     void updateKeyPressedControlSettingPage();
+    void func();
     bool m_isSelected;
     static bool m_isMusicPlayed;
     
@@ -59,6 +64,8 @@ private:
     sf::Event m_event;
     std::unordered_map<sf::Keyboard::Key,std::function<void()>> m_keys_action_map;
     std::unordered_map<sf::Mouse::Button,std::function<void()>> m_mouse_action_map;
+    std::unordered_map<size_t,std::function<void()>> m_ps4_action_map;
+    std::unordered_map<sf::Joystick::Axis,std::function<void()>> m_ps4_axis_map;
     std::vector<std::pair<std::string, sf::Text*>> m_controlTexts;
 
     sf::RenderWindow &m_window;
@@ -72,5 +79,6 @@ private:
     ControlSettingsMenu &m_controlSettingsMenu;
     VolumeManager &m_volume;
     WindowArrowsKey m_WindowArrowsKey;
+    MenuScreenHandler &m_menuScreenHandler;
     MouseButton m_mouse;
 };
