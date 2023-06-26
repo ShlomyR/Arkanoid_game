@@ -11,13 +11,16 @@ public:
     static SoundManager *getInstance();
 
     void playSound(const std::string&);
-    void play();
+    void playSound();
     void stopSound();
+    void pausedSound();
     void setLoop(bool);
     void switchSound(const std::string&);
 
     void playMusic(const std::string&);
+    void playMusic();
     void stopSMusic();
+    void pausedMusic();
     void setMusicLoop(bool);
     void switchMusic(const std::string&);
 private:

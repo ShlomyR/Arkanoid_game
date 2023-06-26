@@ -21,14 +21,22 @@ void SoundManager::playSound(const std::string &filePath)
     m_sound.play();
 }
 
-void SoundManager::play()
+void SoundManager::playSound()
 {
-    m_sound.play();
+    if (m_sound.getStatus() == sf::SoundSource::Status::Paused || m_sound.getStatus() == sf::SoundSource::Status::Stopped) {
+        m_sound.play();
+    }
+    
 }
 
 void SoundManager::stopSound()
 {
     m_sound.stop();
+}
+
+void SoundManager::pausedSound()
+{
+    m_sound.pause();
 }
 
 void SoundManager::setLoop(bool loop)
@@ -51,9 +59,21 @@ void SoundManager::playMusic(const std::string &filePath)
     m_music.play();
 }
 
+void SoundManager::playMusic()
+{
+    if (m_music.getStatus() == sf::SoundSource::Status::Paused || m_music.getStatus() == sf::SoundSource::Status::Stopped) {
+        m_music.play();
+    }
+}
+
 void SoundManager::stopSMusic()
 {
     m_music.stop();
+}
+
+void SoundManager::pausedMusic()
+{
+    m_music.pause();
 }
 
 void SoundManager::setMusicLoop(bool loop)
