@@ -5,17 +5,14 @@
 #include "DifficultyOption.hpp"
 #include "ControlsOption.hpp"
 #include "GameState.hpp"
-#include "MenuScreenHandler.hpp"
 
 #include <memory>
 
-Options::Options(WindowManager& windowManager,MenuScreenHandler& menuScreenHandler)
+Options::Options(WindowManager& windowManager)
     : m_windowManager(windowManager)
-    , m_menuScreenHandler(menuScreenHandler)
     , m_isOptionsPageShown(false)
 {
-    addOptions(std::make_unique<ControlsOption>(), std::make_unique<SoundOption>(), std::make_unique<DifficultyOption>(), std::make_unique<VideoOption>(), std::make_unique<InstructionsOption>());
-    initBorder();
+    addOptions(std::make_unique<SoundOption>(), std::make_unique<ControlsOption>(), std::make_unique<DifficultyOption>(), std::make_unique<InstructionsOption>(), std::make_unique<VideoOption>());
     for (int i = 0; i < getOptionSize(); ++i) {
         getOption(i)->makeButton(m_windowManager.getRenderWindow());
     }
@@ -65,14 +62,6 @@ void Options::setIsSelected()
     }
 }
 
-void Options::initBorder()
-{
-    auto tmpBox = m_menuScreenHandler.getOptionsBoxShape();
-    for (size_t i = 0; i < m_options.size(); ++i) {
-        m_options[i]->setBoxBorder(tmpBox);
-    }
-}
-
 sf::Text* Options::getText(int i)
 {
     return m_options[i]->getText();
@@ -81,11 +70,6 @@ sf::Text* Options::getText(int i)
 std::vector<std::shared_ptr<MenuOption>> Options::getTexts()
 {
     return m_options;
-}
-
-MenuScreenHandler Options::getMenuScreen()
-{
-    return m_menuScreenHandler;
 }
 
 template <typename... Args>

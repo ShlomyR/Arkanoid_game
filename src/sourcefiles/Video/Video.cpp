@@ -3,17 +3,14 @@
 #include "ResX800.hpp"
 #include "FullScreen.hpp"
 #include "GameState.hpp"
-#include "MenuScreenHandler.hpp"
 
 #include <memory>
 
-Video::Video(WindowManager& windowManager,MenuScreenHandler& menuScreenHandler)
+Video::Video(WindowManager& windowManager)
     : m_windowManager(windowManager)
-    , m_menuScreenHandler(menuScreenHandler)
     , m_isVideoPageShown(false)
 {
-    addOptions(std::make_unique<FullScreen>(), std::make_unique<ResX1024>(), std::make_unique<ResX800>());
-    initBorder();
+    addOptions(std::make_unique<FullScreen>(), std::make_unique<ResX800>(), std::make_unique<ResX1024>());
     for (size_t i = 0; i < m_options.size(); ++i) {
         m_options[i]->makeButton(m_windowManager.getRenderWindow());
     }
@@ -70,14 +67,6 @@ void Video::setIsSelected()
     }
 }
 
-void Video::initBorder()
-{
-    auto tmpBox = m_menuScreenHandler.getOptionsBoxShape();
-    for (size_t i = 0; i < m_options.size(); ++i) {
-        m_options[i]->setBoxBorder(tmpBox);
-    }
-}
-
 sf::Text* Video::getText(int i)
 {
     return m_options[i]->getText();
@@ -86,11 +75,6 @@ sf::Text* Video::getText(int i)
 std::vector<std::shared_ptr<MenuOption>> Video::getTexts()
 {
     return m_options;
-}
-
-MenuScreenHandler Video::getMenuScreen()
-{
-    return m_menuScreenHandler;
 }
 
 template <typename... Args>
