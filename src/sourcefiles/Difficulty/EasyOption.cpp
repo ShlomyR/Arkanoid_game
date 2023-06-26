@@ -14,7 +14,7 @@ bool EasyOption::handleInput(InputHandler& inputHandler, GameState &gameState)
 {
     bool mouseHover = m_easyText.getGlobalBounds().contains(inputHandler.getMousePosition());
     if (mouseHover) {
-        m_easyText.setOutlineColor(sf::Color::Blue);
+        m_easyText.setOutlineColor(sf::Color::White);
         if (!m_isMusicPlayed) {
             SoundManager::getInstance()->playSound("src/sounds/Menu_Selection_Click.wav");
             m_isMusicPlayed = true;
@@ -35,23 +35,25 @@ bool EasyOption::handleInput(InputHandler& inputHandler, GameState &gameState)
     } else {
         m_isMusicPlayed = false;
         setIsSelected(false);
-        m_easyText.setOutlineColor(sf::Color::White);
+        m_easyText.setOutlineColor(m_color);
     }
 
     return false;
 }
 
 
-void EasyOption::makeButton(sf::RenderWindow& window)
+void EasyOption::makeButton(sf::RenderWindow&)
 {
-    m_font.loadFromFile("src/fonts/kenVectoFutureThin2.ttf");
+    m_color = sf::Color{ 128,128,128 };
+    m_font.loadFromFile("src/fonts/DIN.ttf");
     m_easyText.setString("EASY");
     m_easyText.setFont(m_font);
     m_easyText.setCharacterSize(48);
-    m_easyText.setFillColor(sf::Color::Green);
+    m_easyText.setFillColor(sf::Color::White);
     m_easyText.setOutlineThickness(2);
-    m_easyText.setOutlineColor(sf::Color::Black);
-    sf::Vector2f buttonPos = sf::Vector2f(window.getSize().x / 2 - m_easyText.getGlobalBounds().width / 2, window.getSize().y / 2 - 200);
+    m_easyText.setOutlineColor(sf::Color::White);
+    m_easyText.setScale(0.5, 0.5);
+    sf::Vector2f buttonPos = sf::Vector2f(sf::Vector2f(m_boxBorder.getPosition().x + 40, m_boxBorder.getPosition().y + 100));
     m_easyText.setPosition(buttonPos);
 }
 
@@ -64,17 +66,22 @@ void EasyOption::setIsTranslucent(bool value)
 {
     m_isTranslucent = value;
     if (m_isTranslucent) {
-        m_easyText.setFillColor(sf::Color::Transparent);
+        m_easyText.setFillColor(m_color);
     } else {
-        m_easyText.setFillColor(sf::Color::Green);
+        m_easyText.setFillColor(sf::Color::White);
     }
+}
+
+void EasyOption::setBoxBorder(sf::RectangleShape &recShape)
+{
+    m_boxBorder = recShape;
 }
 
 void EasyOption::setIsSelected(bool value)
 {
     m_isSelected = value;
     if (m_isSelected) {
-        m_easyText.setOutlineColor(sf::Color::Blue);
+        m_easyText.setOutlineColor(m_color);
     } else {
         m_easyText.setOutlineColor(sf::Color::White);
     }
