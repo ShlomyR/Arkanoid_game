@@ -31,8 +31,6 @@
 #include "ControlSettings.hpp"
 #include "ControlSettingsMenu.hpp"
 #include "VolumeManager.hpp"
-#include "MenuScreenHandler.hpp"
-#include "VideoPlayer.hpp"
 
 class InitObjects
 {
@@ -44,21 +42,19 @@ public:
 
 private:
     WindowManager m_window;
+    ControlSettings m_controlSettings;
+    ControlSettingsMenu m_controlSettingsMenu;
+    VolumeManager m_volumeManager;
     Border m_border;
     Paddle m_paddle;
     Ball m_ball;
-    MenuScreenHandler m_menuScreenHandler;
-    ControlSettings m_controlSettings;
-    ControlSettingsMenu m_controlSettingsMenu;
     Menu m_menu;
-    VolumeManager m_volumeManager;
     Options m_options;
     Difficulty m_difficulty;
     Video m_video;
     Brick m_brick;
     Points m_points;
     Hud m_hud;
-    VideoPlayer m_movie;
     Resoloution m_resoloution;
     GameState m_gameState;
     Background m_background;
