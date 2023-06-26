@@ -13,7 +13,6 @@
 #include "Video.hpp"
 #include "VolumeManager.hpp"
 #include "ControlSettingsMenu.hpp"
-#include "MenuScreenHandler.hpp"
 
 int Resoloution::m_count;
 
@@ -28,7 +27,6 @@ Resoloution::Resoloution(WindowManager &window
     , Video &video
     , ControlSettingsMenu &controlSettingsMenu
     , VolumeManager &volume
-    , MenuScreenHandler &menuScreenHandler
 )
 : m_window(window)
 , m_border(border)
@@ -43,7 +41,6 @@ Resoloution::Resoloution(WindowManager &window
 , m_volume(volume)
 , m_initialWindowSize(800,600)
 , m_firstBrickPos(75,60)
-, m_menuScreenHandler(menuScreenHandler)
 {
     m_count = 0; 
 }
@@ -71,9 +68,27 @@ void Resoloution::changeResolution(sf::VideoMode videoMode)
     updateLayout(windowSize);
 }
 
-void Resoloution::setPositionsWithOffset(std::vector<std::shared_ptr<MenuOption>> , const sf::Vector2u &windowSize, int )
+void Resoloution::setPositionsWithOffset(std::vector<std::shared_ptr<MenuOption>> texts, const sf::Vector2u &windowSize, int offset)
 {
-    m_menuScreenHandler.updatePos(windowSize);
+    if (offset == 100) {
+        int size = -200;
+        offset = 100;
+        for (size_t i = 0; i < texts.size(); i++) {
+            sf::Text* text = texts.at(i)->getText();
+            sf::Vector2f buttonPos = sf::Vector2f(windowSize.x / 2 - text->getGlobalBounds().width / 2, windowSize.y / 2 + size);
+            text->setPosition(buttonPos);
+            size += offset;
+        }
+    } else {
+        int size = -250;
+        offset = 100;
+        for (size_t i = 0; i < texts.size(); i++) {
+            sf::Text* text = texts.at(i)->getText();
+            sf::Vector2f buttonPos = sf::Vector2f(windowSize.x / 2 - text->getGlobalBounds().width / 2, windowSize.y / 2 + size);
+            text->setPosition(buttonPos);
+            size += offset;
+        }
+    }
 }
 
 void Resoloution::updateTextPositions(const sf::Vector2u &windowSize)
