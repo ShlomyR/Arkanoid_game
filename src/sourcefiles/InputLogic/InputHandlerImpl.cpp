@@ -7,7 +7,6 @@
 #include "Video.hpp"
 #include "SoundManager.hpp"
 #include "VolumeManager.hpp"
-#include "MenuScreenHandler.hpp"
 
 #include <iostream>
 #include <thread>
@@ -44,30 +43,6 @@ void InputHandlerImpl::printVector(std::unordered_map<sf::Keyboard::Key, std::fu
     }
 }
 
-void InputHandlerImpl::func()
-{
-    sf::Vector2i mousePosition = sf::Mouse::getPosition(m_window);
-    float joystickAxisX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
-    float joystickAxisY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
-    float mouseSpeed = 0.5f;
-
-    // Calculate the mouse movement delta based on joystick input and mouse speed
-    sf::Vector2i mouseDelta(
-        static_cast<int>(joystickAxisX * mouseSpeed),
-        static_cast<int>(joystickAxisY * mouseSpeed)
-    );
-
-    // Update the new mouse position based on the delta
-    mousePosition += mouseDelta;
-
-    // Clamp the mouse position within the window bounds
-    mousePosition.x = std::max(0, std::min(mousePosition.x, static_cast<int>(m_window.getSize().x)));
-    mousePosition.y = std::max(0, std::min(mousePosition.y, static_cast<int>(m_window.getSize().y)));
-
-    // Set the new mouse position
-    sf::Mouse::setPosition(mousePosition);
-}
-
 
 InputHandlerImpl::InputHandlerImpl(sf::RenderWindow &window
     , PaddleArrowsHandnling &paddle_keys
@@ -79,7 +54,6 @@ InputHandlerImpl::InputHandlerImpl(sf::RenderWindow &window
     , Hud &hud
     , ControlSettingsMenu &controlSettingsMenu
     , VolumeManager &volume
-    , MenuScreenHandler &menuScreenHandler
 )
 : m_window(window)
 , m_paddle_keys(paddle_keys)
@@ -92,8 +66,7 @@ InputHandlerImpl::InputHandlerImpl(sf::RenderWindow &window
 , m_controlSettingsMenu(controlSettingsMenu)
 , m_volume(volume)
 , m_WindowArrowsKey(m_window,m_gameState)
-, m_menuScreenHandler(menuScreenHandler)
-, m_mouse(m_menu,options,m_difficulty,m_video, m_menuScreenHandler)
+, m_mouse(m_menu,options,m_difficulty,m_video)
 {
     initMap();
     m_isSelected = false;
@@ -111,15 +84,6 @@ void InputHandlerImpl::handleInput()
                 performKeyAction(m_event);
                 updateKeyPressedControlSettingPage();
                 break;
-            case sf::Event::JoystickMoved:
-                performPs4AxisAction(m_event);
-                break;
-            case sf::Event::JoystickButtonPressed:
-                performPs4Action(m_event);
-                if (m_gameState.getState() == State::VolumePage) {
-                    m_volume.updateMousePrest(m_mousePosition);
-                }
-                break;
             case sf::Event::MouseButtonPressed:
                 performMouseAction(m_event);
                 if (m_gameState.getState() == State::VolumePage) {
@@ -128,7 +92,6 @@ void InputHandlerImpl::handleInput()
 
                 break;
             case sf::Event::MouseMoved:
-                m_window.setMouseCursorVisible(true);
                 m_mousePosition = m_window.mapPixelToCoords(sf::Vector2i(m_event.mouseMove.x, m_event.mouseMove.y));
                 updateMouseMovedControlSettingPage();
                 break;
@@ -164,54 +127,23 @@ void InputHandlerImpl::initMap()
 {
     // keys map
     m_keys_action_map[sf::Keyboard::Escape] = [this]() { m_WindowArrowsKey.escape(); };
-    m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Move Paddle Left")] = [this]() { m_paddle_keys.left(); };
-    m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Move Paddle Right")] = [this]() { m_paddle_keys.right(); };
-    m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Release Ball")] = [this]() { m_paddle_keys.space(); };
-
-    m_keys_action_map[sf::Keyboard::Up] = [this]() { m_WindowArrowsKey.up(); };
-    m_keys_action_map[sf::Keyboard::Down] = [this]() { m_WindowArrowsKey.down(); };
-    m_keys_action_map[sf::Keyboard::Return] = [this]() { m_mouse.left(false); };
+    m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Left")] = [this]() { m_paddle_keys.left(); };
+    m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Right")] = [this]() { m_paddle_keys.right(); };
+    m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Space")] = [this]() { m_paddle_keys.space(); };
     // Testing
-    // m_keys_action_map[sf::Keyboard::Q] = [this]() { m_gameState.setState(State::MenuPage); };
-    // m_keys_action_map[sf::Keyboard::A] = [this]() { m_gameState.setState(State::PlayPage); };
-    // m_keys_action_map[sf::Keyboard::Z] = [this]() { m_gameState.setState(State::HighScorePage); };
-    // m_keys_action_map[sf::Keyboard::W] = [this]() { m_gameState.setState(State::UpdateHighScorePage); };
+    m_keys_action_map[sf::Keyboard::Q] = [this]() { m_gameState.setState(State::MenuPage); };
+    m_keys_action_map[sf::Keyboard::A] = [this]() { m_gameState.setState(State::PlayPage); };
+    m_keys_action_map[sf::Keyboard::Z] = [this]() { m_gameState.setState(State::HighScorePage); };
+    m_keys_action_map[sf::Keyboard::W] = [this]() { m_gameState.setState(State::UpdateHighScorePage); };
     // mouse map
     m_mouse_action_map[sf::Mouse::Left] = [this]() { m_mouse.left(false); };
-    m_ps4_action_map[0] = [this]() { m_mouse.left(false); };
-    m_ps4_action_map[1] = [this]() {  m_WindowArrowsKey.escape(); };
-    // m_ps4_action_map[2] = [this]() {  m_paddle_keys.space(); };
-
-    m_ps4_axis_map[sf::Joystick::Y] = [this]() { 
-        if (sf::Joystick::getAxisPosition(0, sf::Joystick::Y) == 100) {
-            m_WindowArrowsKey.down(); 
-        } else if (sf::Joystick::getAxisPosition(0, sf::Joystick::Y) == -100) {
-            m_WindowArrowsKey.up(); 
-        }
-    };
-    m_ps4_axis_map[m_controlSettingsMenu.getControlSettings().getPs4Mapping("Move Paddle Left")] = [this]() { 
-        m_paddle_keys.left();
-    };
-    m_ps4_axis_map[m_controlSettingsMenu.getControlSettings().getPs4Mapping("Move Paddle Right")] = [this]() { 
-        m_paddle_keys.right();
-    };
-    m_ps4_axis_map[m_controlSettingsMenu.getControlSettings().getPs4Mapping("Release Ball")] = [this]() { 
-        m_paddle_keys.space(); 
-    };
-    m_ps4_axis_map[sf::Joystick::PovY] = [this]() { 
-        if (sf::Joystick::getAxisPosition(0, sf::Joystick::PovY) == 100) {
-            m_WindowArrowsKey.down(); 
-        } else if (sf::Joystick::getAxisPosition(0, sf::Joystick::PovY) == -100) {
-            m_WindowArrowsKey.up(); 
-        }
-    };
 }
 
 void InputHandlerImpl::updateKeyMap()
 {
-    m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Move Paddle Left")] = [this]() { m_paddle_keys.left(); };
-    m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Move Paddle Right")] = [this]() { m_paddle_keys.right(); };
-    m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Release Ball")] = [this]() { m_paddle_keys.space(); };
+    m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Left")] = [this]() { m_paddle_keys.left(); };
+    m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Right")] = [this]() { m_paddle_keys.right(); };
+    m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Space")] = [this]() { m_paddle_keys.space(); };
     printVector(m_keys_action_map);
 }
 
@@ -259,26 +191,6 @@ void InputHandlerImpl::performMouseAction(sf::Event event)
         
     } else {
         std::cout << "Sorry bro, the mouse button you pressed doesn't exist." << "\n";
-    }
-}
-
-void InputHandlerImpl::performPs4Action(sf::Event event)
-{
-    auto it = m_ps4_action_map.find(event.joystickButton.button);
-    if (it != m_ps4_action_map.end()) {
-        it->second();
-    } else {
-        // std::cout << "Sorry bro, the ps4 button you pressed doesn't exist." << "\n";
-    }
-}
-
-void InputHandlerImpl::performPs4AxisAction(sf::Event event)
-{
-    auto it = m_ps4_axis_map.find(event.joystickMove.axis);
-    if (it != m_ps4_axis_map.end()) {
-        it->second();
-    } else {
-        // std::cout << "Sorry bro, the ps4 axis you pressed doesn't exist." << "\n";
     }
 }
 
@@ -386,7 +298,7 @@ std::string InputHandlerImpl::keyToString(sf::Keyboard::Key key)
         { sf::Keyboard::F13, "F13" },
         { sf::Keyboard::F14, "F14" },
         { sf::Keyboard::F15, "F15" },
-        { sf::Keyboard::Pause, "Pause" }    
+        { sf::Keyboard::Pause, "Pause" }
     };
 
     auto it = keyToStringMap.find(key);
