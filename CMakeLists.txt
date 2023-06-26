@@ -5,7 +5,7 @@ project(main)
 
 set(CMAKE_CXX_STANDARD 17)
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     set(SFML_DIR "C:/lib/SFML/lib/cmake/SFML")
     set(BOOST_DIR "C:/lib/BOOST/stage/lib/cmake/boost_filesystem-1.82.0")
@@ -110,6 +110,7 @@ elseif (CMAKE_SYSTEM_NAME MATCHES "Linux")
         sfml-system
         sfml-audio
         boost_filesystem
+        sfeMovie
     )
 
 # Check if the system is Windows
