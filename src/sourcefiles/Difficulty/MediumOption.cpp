@@ -14,7 +14,7 @@ bool MediumOption::handleInput(InputHandler& inputHandler, GameState &gameState)
 {
     bool mouseHover = m_mediumText.getGlobalBounds().contains(inputHandler.getMousePosition());
     if (mouseHover) {
-        m_mediumText.setOutlineColor(sf::Color::White);
+        m_mediumText.setOutlineColor(sf::Color::Blue);
         if (!m_isMusicPlayed) {
             SoundManager::getInstance()->playSound("src/sounds/Menu_Selection_Click.wav");
             m_isMusicPlayed = true;
@@ -34,25 +34,23 @@ bool MediumOption::handleInput(InputHandler& inputHandler, GameState &gameState)
     } else {
         m_isMusicPlayed = false;
         setIsSelected(false);
-        m_mediumText.setOutlineColor(m_color);
+        m_mediumText.setOutlineColor(sf::Color::White); 
     }
 
     return false;
 }
 
 
-void MediumOption::makeButton(sf::RenderWindow&)
+void MediumOption::makeButton(sf::RenderWindow& window)
 {
-    m_color = sf::Color{ 128,128,128 };
-    m_font.loadFromFile("src/fonts/DIN.ttf");
+    m_font.loadFromFile("src/fonts/kenVectoFutureThin2.ttf");
     m_mediumText.setString("MEDIUM");
     m_mediumText.setFont(m_font);
     m_mediumText.setCharacterSize(48);
-    m_mediumText.setFillColor(m_color);
+    m_mediumText.setFillColor(sf::Color::Transparent);
     m_mediumText.setOutlineThickness(2);
-    m_mediumText.setOutlineColor(m_color);
-    m_mediumText.setScale(0.5, 0.5);
-    sf::Vector2f buttonPos = sf::Vector2f(sf::Vector2f(m_boxBorder.getPosition().x + 40, m_boxBorder.getPosition().y + 150));
+    m_mediumText.setOutlineColor(sf::Color::Black);
+    sf::Vector2f buttonPos = sf::Vector2f(window.getSize().x / 2 - m_mediumText.getGlobalBounds().width / 2, window.getSize().y / 2 - 100);
     m_mediumText.setPosition(buttonPos);
 }
 
@@ -65,22 +63,17 @@ void MediumOption::setIsTranslucent(bool value)
 {
     m_isTranslucent = value;
     if (m_isTranslucent) {
-        m_mediumText.setFillColor(m_color);
+        m_mediumText.setFillColor(sf::Color::Transparent);
     } else {
-        m_mediumText.setFillColor(sf::Color::White);
+        m_mediumText.setFillColor(sf::Color::Green);
     }
-}
-
-void MediumOption::setBoxBorder(sf::RectangleShape &recShape)
-{
-    m_boxBorder = recShape;
 }
 
 void MediumOption::setIsSelected(bool value)
 {
     m_isSelected = value;
     if (m_isSelected) {
-        m_mediumText.setOutlineColor(m_color);
+        m_mediumText.setOutlineColor(sf::Color::Blue);
     } else {
         m_mediumText.setOutlineColor(sf::Color::White);
     }

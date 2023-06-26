@@ -10,14 +10,12 @@ void ResX800::draw(sf::RenderWindow& window)
     window.draw(m_resX800Text);
 }
 
-bool ResX800::handleInput(InputHandler& , GameState &gameState)
+bool ResX800::handleInput(InputHandler& inputHandler, GameState &gameState)
 {
     sf::VideoMode resolution(800, 600);
-    // auto color = sf::Color{ 128,128,128 };
-    // bool mouseHover = m_resX800Text.getGlobalBounds().contains(inputHandler.getMousePosition());
-     bool mouseHover = false;
+    bool mouseHover = m_resX800Text.getGlobalBounds().contains(inputHandler.getMousePosition());
     if (mouseHover) {
-        // m_resX800Text.setOutlineColor(sf::Color::White);
+        m_resX800Text.setOutlineColor(sf::Color::Blue);
         if (!m_isMusicPlayed) {
             SoundManager::getInstance()->playSound("src/sounds/Menu_Selection_Click.wav");
             m_isMusicPlayed = true;
@@ -38,24 +36,22 @@ bool ResX800::handleInput(InputHandler& , GameState &gameState)
     } else {
         m_isMusicPlayed = false;
         setIsSelected(false);
-        // m_resX800Text.setOutlineColor(color);
+        m_resX800Text.setOutlineColor(sf::Color::White);
     }
     return false;
 }
 
 
-void ResX800::makeButton(sf::RenderWindow& )
+void ResX800::makeButton(sf::RenderWindow& window)
 {
-    auto color = sf::Color{ 128,128,128 };
-    m_font.loadFromFile("src/fonts/DIN.ttf");
+    m_font.loadFromFile("src/fonts/kenVectoFutureThin2.ttf");
     m_resX800Text.setString("800 X 600");
     m_resX800Text.setFont(m_font);
     m_resX800Text.setCharacterSize(48);
-    m_resX800Text.setFillColor(color);
+    m_resX800Text.setFillColor(sf::Color::Green);
     m_resX800Text.setOutlineThickness(2);
-    m_resX800Text.setOutlineColor(color);
-    m_resX800Text.setScale(0.5, 0.5);
-    sf::Vector2f buttonPos = sf::Vector2f(sf::Vector2f(m_boxBorder.getPosition().x + 40, m_boxBorder.getPosition().y + 200));
+    m_resX800Text.setOutlineColor(sf::Color::Black);
+    sf::Vector2f buttonPos = sf::Vector2f(window.getSize().x / 2 - m_resX800Text.getGlobalBounds().width / 2, window.getSize().y / 2 - 100);
     m_resX800Text.setPosition(buttonPos);
 }
 
@@ -67,25 +63,18 @@ bool ResX800::isSelected() const
 void ResX800::setIsTranslucent(bool value)
 {
     m_isTranslucent = value;
-    auto color = sf::Color{ 128,128,128 };
     if (m_isTranslucent) {
-        m_resX800Text.setFillColor(color);
+        m_resX800Text.setFillColor(sf::Color::Transparent);
     } else {
-        m_resX800Text.setFillColor(sf::Color::White);
+        m_resX800Text.setFillColor(sf::Color::Green);
     }
-}
-
-void ResX800::setBoxBorder(sf::RectangleShape &recShape)
-{
-    m_boxBorder = recShape;
 }
 
 void ResX800::setIsSelected(bool value)
 {
     m_isSelected = value;
-    auto color = sf::Color{ 128,128,128 };
     if (m_isSelected) {
-        m_resX800Text.setOutlineColor(color);
+        m_resX800Text.setOutlineColor(sf::Color::Blue);
     } else {
         m_resX800Text.setOutlineColor(sf::Color::White);
     }

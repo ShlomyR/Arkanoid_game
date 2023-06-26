@@ -14,7 +14,7 @@ bool HardOption::handleInput(InputHandler& inputHandler, GameState &gameState)
 {
     bool mouseHover = m_hardText.getGlobalBounds().contains(inputHandler.getMousePosition());
     if (mouseHover) {
-        m_hardText.setOutlineColor(sf::Color::White);
+        m_hardText.setOutlineColor(sf::Color::Blue);
         if (!m_isMusicPlayed) {
             SoundManager::getInstance()->playSound("src/sounds/Menu_Selection_Click.wav");
             m_isMusicPlayed = true;
@@ -35,25 +35,23 @@ bool HardOption::handleInput(InputHandler& inputHandler, GameState &gameState)
     } else {
         m_isMusicPlayed = false;
         setIsSelected(false);
-        m_hardText.setOutlineColor(m_color);
+        m_hardText.setOutlineColor(sf::Color::White);
     }
 
     return false;
 }
 
 
-void HardOption::makeButton(sf::RenderWindow&)
+void HardOption::makeButton(sf::RenderWindow& window)
 {
-    m_color = sf::Color{ 128,128,128 };
-    m_font.loadFromFile("src/fonts/DIN.ttf");
+    m_font.loadFromFile("src/fonts/kenVectoFutureThin2.ttf");
     m_hardText.setString("HARD");
     m_hardText.setFont(m_font);
     m_hardText.setCharacterSize(48);
-    m_hardText.setFillColor(m_color);
+    m_hardText.setFillColor(sf::Color::Transparent);
     m_hardText.setOutlineThickness(2);
-    m_hardText.setOutlineColor(m_color);
-    m_hardText.setScale(0.5, 0.5);
-    sf::Vector2f buttonPos = sf::Vector2f(sf::Vector2f(m_boxBorder.getPosition().x + 40, m_boxBorder.getPosition().y + 200));
+    m_hardText.setOutlineColor(sf::Color::Black);
+    sf::Vector2f buttonPos = sf::Vector2f(window.getSize().x / 2 - m_hardText.getGlobalBounds().width / 2, window.getSize().y / 2);
     m_hardText.setPosition(buttonPos);
 }
 
@@ -66,22 +64,17 @@ void HardOption::setIsTranslucent(bool value)
 {
     m_isTranslucent = value;
     if (m_isTranslucent) {
-        m_hardText.setFillColor(m_color);
+        m_hardText.setFillColor(sf::Color::Transparent);
     } else {
-        m_hardText.setFillColor(sf::Color::White);
+        m_hardText.setFillColor(sf::Color::Green);
     }
-}
-
-void HardOption::setBoxBorder(sf::RectangleShape &recShape)
-{
-    m_boxBorder = recShape;
 }
 
 void HardOption::setIsSelected(bool value)
 {
     m_isSelected = value;
     if (m_isSelected) {
-        m_hardText.setOutlineColor(m_color);
+        m_hardText.setOutlineColor(sf::Color::Blue);
     } else {
         m_hardText.setOutlineColor(sf::Color::White);
     }
