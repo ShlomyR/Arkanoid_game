@@ -49,6 +49,11 @@ private:
     void updateHighScore();
     void updateRegisterHighScorePage();
     void updateNextLevelOrGameOver();
+    void updateOptionsPage();
+    void updateDifficultyPage();
+    void updateVideoPage();
+    void updateVolumePage();
+    void updateControlSettingPage();
 private:
     GameState &m_gameState;
     InputHandler &m_inputHandler;

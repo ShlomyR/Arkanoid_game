@@ -49,7 +49,7 @@ GameStateUpdaterImpl::GameStateUpdaterImpl(GameState &gameState
 , m_menuScreenHandler(menuScreenHandler)
 {
     m_isMusicPlayed = false;
-    SoundManager::getInstance()->playMusic("The_Last_of_Us_Remastered_Main_Menu_at_4K_(All_Tracks).wav");
+    SoundManager::getInstance()->playMusic("The_Last_of_Us_Remastered_Main_Menu_at_4K.wav");
 }
 
 void GameStateUpdaterImpl::update()
@@ -65,45 +65,15 @@ void GameStateUpdaterImpl::update()
     } else if (m_gameState.getState() == State::UpdateHighScorePage) {
         updateRegisterHighScorePage();
     } else if (m_gameState.getState() == State::OptionsPage) {
-        m_options.setIsOptionsPageShown(true);
-        m_menu.setIsMenuPageShown(false);
-        m_difficulty.setIsDifficultyPageShown(false);
-        m_video.setIsVideoPageShown(false);
-        m_menuScreenHandler.setCurrPage("OptionsPage");
-        m_menuScreenHandler.updateBox("OptionsPage");
-        m_options.handleInput(m_inputHandler, m_gameState);
+        updateOptionsPage();
     } else if (m_gameState.getState() == State::DifficultyPage) {
-        m_options.setIsOptionsPageShown(false);
-        m_menu.setIsMenuPageShown(false);
-        m_difficulty.setIsDifficultyPageShown(true);
-        m_video.setIsVideoPageShown(false);
-        m_menuScreenHandler.setCurrPage("DifficultyPage");
-        m_menuScreenHandler.updateBox("DifficultyPage");
-        m_difficulty.handleInput(m_inputHandler, m_gameState);
+        updateDifficultyPage();
     } else if (m_gameState.getState() == State::VideoPage) {
-        m_options.setIsOptionsPageShown(false);
-        m_menu.setIsMenuPageShown(false);
-        m_difficulty.setIsDifficultyPageShown(false);
-        m_video.setIsVideoPageShown(true);
-        m_menuScreenHandler.setCurrPage("VideoPage");
-        m_menuScreenHandler.updateBox("VideoPage");
-        m_video.handleInput(m_inputHandler, m_gameState);
-        m_gameResetter.reset();
+        updateVideoPage();
     } else if (m_gameState.getState() == State::ControlSettingPage) {
-        m_options.setIsOptionsPageShown(false);
-        m_menu.setIsMenuPageShown(false);
-        m_difficulty.setIsDifficultyPageShown(false);
-        m_video.setIsVideoPageShown(false);
-        m_menuScreenHandler.setCurrPage("ControlSettingPage");
-        m_menuScreenHandler.updateBox("ControlSettingPage");
-        m_hud.update(m_gameState);
+        updateControlSettingPage();
     } else if (m_gameState.getState() == State::VolumePage) {
-        m_options.setIsOptionsPageShown(false);
-        m_menu.setIsMenuPageShown(false);
-        m_difficulty.setIsDifficultyPageShown(false);
-        m_video.setIsVideoPageShown(false);
-        m_menuScreenHandler.setCurrPage("VolumePage");
-        m_menuScreenHandler.updateBox("VolumePage");
+        updateVolumePage();
     } else if (m_gameState.getState() == State::Exit) {
         m_windowManager.getRenderWindow().close();
     }
@@ -200,4 +170,59 @@ void GameStateUpdaterImpl::updateRegisterHighScorePage()
 {
     m_windowManager.getRenderWindow().setMouseCursorVisible(false);
     m_hud.update(m_gameState);
+}
+
+void GameStateUpdaterImpl::updateOptionsPage()
+{
+    m_options.setIsOptionsPageShown(true);
+    m_menu.setIsMenuPageShown(false);
+    m_difficulty.setIsDifficultyPageShown(false);
+    m_video.setIsVideoPageShown(false);
+    m_menuScreenHandler.setCurrPage("OptionsPage");
+    m_menuScreenHandler.updateBox("OptionsPage");
+    m_options.handleInput(m_inputHandler, m_gameState);
+}
+
+void GameStateUpdaterImpl::updateDifficultyPage()
+{
+    m_options.setIsOptionsPageShown(false);
+    m_menu.setIsMenuPageShown(false);
+    m_difficulty.setIsDifficultyPageShown(true);
+    m_video.setIsVideoPageShown(false);
+    m_menuScreenHandler.setCurrPage("DifficultyPage");
+    m_menuScreenHandler.updateBox("DifficultyPage");
+    m_difficulty.handleInput(m_inputHandler, m_gameState);
+}
+
+void GameStateUpdaterImpl::updateVideoPage()
+{
+    m_options.setIsOptionsPageShown(false);
+    m_menu.setIsMenuPageShown(false);
+    m_difficulty.setIsDifficultyPageShown(false);
+    m_video.setIsVideoPageShown(true);
+    m_menuScreenHandler.setCurrPage("VideoPage");
+    m_menuScreenHandler.updateBox("VideoPage");
+    m_video.handleInput(m_inputHandler, m_gameState);
+    m_gameResetter.reset();
+}
+
+void GameStateUpdaterImpl::updateControlSettingPage()
+{
+    m_options.setIsOptionsPageShown(false);
+    m_menu.setIsMenuPageShown(false);
+    m_difficulty.setIsDifficultyPageShown(false);
+    m_video.setIsVideoPageShown(false);
+    m_menuScreenHandler.setCurrPage("ControlSettingPage");
+    m_menuScreenHandler.updateBox("ControlSettingPage");
+    m_hud.update(m_gameState);
+}
+
+void GameStateUpdaterImpl::updateVolumePage()
+{
+    m_options.setIsOptionsPageShown(false);
+    m_menu.setIsMenuPageShown(false);
+    m_difficulty.setIsDifficultyPageShown(false);
+    m_video.setIsVideoPageShown(false);
+    m_menuScreenHandler.setCurrPage("VolumePage");
+    m_menuScreenHandler.updateBox("VolumePage");
 }
