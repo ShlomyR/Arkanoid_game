@@ -6,17 +6,17 @@ Hud::Hud(sf::RenderWindow& window)
 : m_window(window)
 , m_highScoreManager()
 {
-    if (!m_font.loadFromFile("src/fonts/kenVectoFutureThin2.ttf")) {
+    if (!m_font.loadFromFile("src/fonts/DIN_Bold.ttf")) {
         throw std::runtime_error("Could not load the font!!!");
     }
     makeText(m_scoreText, m_font, "NONE", sf::Vector2i(10, 10));
     makeText(m_healthText, m_font, "NONE", sf::Vector2i(window.getSize().x -150, 10));
     makeText(m_gameOverText, m_font, "NONE", sf::Vector2i(window.getSize().x / 2.f, window.getSize().y / 2.f));
     makeText(m_highScoreText, m_font, "NONE", sf::Vector2i(window.getSize().x - 500, 10));
-    makeText(m_highScoreNamesText, m_font, "NONE", sf::Vector2i(100, 150));
-    makeText(m_highScoreScoresText, m_font, "NONE", sf::Vector2i(600, 150));
-    makeText(m_highScoreInputText, m_font, "NONE", sf::Vector2i(250, 20));
-    makeText(m_inputText, m_font, name, sf::Vector2i(350, 45));
+    makeText(m_highScoreNamesText, m_font, "NONE", sf::Vector2i(200, 300));
+    makeText(m_highScoreScoresText, m_font, "NONE", sf::Vector2i(700, 300));
+    makeText(m_highScoreInputText, m_font, "NONE", sf::Vector2i(300, 200));
+    makeText(m_inputText, m_font, name, sf::Vector2i(370, 245));
 }
 
 void Hud::update(GameState &gameState)
