@@ -47,7 +47,7 @@ RendererImpl::RendererImpl(WindowManager &window
 , m_menuScreenHandler(menuScreenHandler)
 , m_movie(movie)
 {
-    std::string file = "The_Last_of_Us_Remastered_Main_Menu_at_4K_(All_Tracks).mp4";
+    std::string file = "The_Last_of_Us_Remastered_Main_Menu_at_4K.mp4";
     m_movie.playVideo(file);
 }
 
