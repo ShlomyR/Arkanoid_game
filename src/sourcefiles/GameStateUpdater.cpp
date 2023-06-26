@@ -11,7 +11,6 @@
 #include "Difficulty.hpp"
 #include "Video.hpp"
 #include "PaddleArrowsHandnling.hpp"
-#include "MenuScreenHandler.hpp"
 
 #include <unistd.h>
 #include <thread>
@@ -31,7 +30,6 @@ GameStateUpdaterImpl::GameStateUpdaterImpl(GameState &gameState
     , GameResetter &gameResetter
     , WindowManager &windowManager
     , PaddleArrowsHandnling &paddleKeys
-    , MenuScreenHandler &menuScreenHandler
 )
 : m_gameState(gameState)
 , m_inputHandler(inputHandler)
@@ -46,10 +44,8 @@ GameStateUpdaterImpl::GameStateUpdaterImpl(GameState &gameState
 , m_gameResetter(gameResetter)
 , m_windowManager(windowManager)
 , m_paddleKeys(paddleKeys)
-, m_menuScreenHandler(menuScreenHandler)
 {
     m_isMusicPlayed = false;
-    SoundManager::getInstance()->playMusic("The_Last_of_Us_Remastered_Main_Menu_at_4K_(All_Tracks).wav");
 }
 
 void GameStateUpdaterImpl::update()
@@ -59,8 +55,6 @@ void GameStateUpdaterImpl::update()
     } else if (m_gameState.getState() == State::PlayPage) {
         updatePlayPage();
     } else if (m_gameState.getState() == State::HighScorePage) {
-        m_menuScreenHandler.setCurrPage("HighScorePage");
-        m_menuScreenHandler.updateBox("HighScorePage");
         updateHighScorePage();
     } else if (m_gameState.getState() == State::UpdateHighScorePage) {
         updateRegisterHighScorePage();
@@ -69,41 +63,26 @@ void GameStateUpdaterImpl::update()
         m_menu.setIsMenuPageShown(false);
         m_difficulty.setIsDifficultyPageShown(false);
         m_video.setIsVideoPageShown(false);
-        m_menuScreenHandler.setCurrPage("OptionsPage");
-        m_menuScreenHandler.updateBox("OptionsPage");
         m_options.handleInput(m_inputHandler, m_gameState);
     } else if (m_gameState.getState() == State::DifficultyPage) {
         m_options.setIsOptionsPageShown(false);
         m_menu.setIsMenuPageShown(false);
         m_difficulty.setIsDifficultyPageShown(true);
         m_video.setIsVideoPageShown(false);
-        m_menuScreenHandler.setCurrPage("DifficultyPage");
-        m_menuScreenHandler.updateBox("DifficultyPage");
         m_difficulty.handleInput(m_inputHandler, m_gameState);
     } else if (m_gameState.getState() == State::VideoPage) {
         m_options.setIsOptionsPageShown(false);
         m_menu.setIsMenuPageShown(false);
         m_difficulty.setIsDifficultyPageShown(false);
         m_video.setIsVideoPageShown(true);
-        m_menuScreenHandler.setCurrPage("VideoPage");
-        m_menuScreenHandler.updateBox("VideoPage");
         m_video.handleInput(m_inputHandler, m_gameState);
         m_gameResetter.reset();
     } else if (m_gameState.getState() == State::ControlSettingPage) {
-        m_options.setIsOptionsPageShown(false);
+        m_options.setIsOptionsPageShown(true);
         m_menu.setIsMenuPageShown(false);
         m_difficulty.setIsDifficultyPageShown(false);
         m_video.setIsVideoPageShown(false);
-        m_menuScreenHandler.setCurrPage("ControlSettingPage");
-        m_menuScreenHandler.updateBox("ControlSettingPage");
         m_hud.update(m_gameState);
-    } else if (m_gameState.getState() == State::VolumePage) {
-        m_options.setIsOptionsPageShown(false);
-        m_menu.setIsMenuPageShown(false);
-        m_difficulty.setIsDifficultyPageShown(false);
-        m_video.setIsVideoPageShown(false);
-        m_menuScreenHandler.setCurrPage("VolumePage");
-        m_menuScreenHandler.updateBox("VolumePage");
     } else if (m_gameState.getState() == State::Exit) {
         m_windowManager.getRenderWindow().close();
     }
@@ -158,8 +137,8 @@ void GameStateUpdaterImpl::setGameState(State state)
 void GameStateUpdaterImpl::updateMenuPage()
 {
     if (!m_isMusicPlayed) {
-        SoundManager::getInstance()->playMusic();
-        // SoundManager::getInstance()->setMusicLoop(true);
+        SoundManager::getInstance()->playMusic("src/sounds/b423b42.wav");
+        SoundManager::getInstance()->setMusicLoop(true);
         m_isMusicPlayed = true;
     }
     m_menu.setIsMenuPageShown(true);
@@ -174,7 +153,7 @@ void GameStateUpdaterImpl::updatePlayPage()
     updateHighScore();
     updateNextLevelOrGameOver();
     m_isMusicPlayed = false;
-    SoundManager::getInstance()->pausedMusic();
+    SoundManager::getInstance()->stopSMusic();
     m_physicsManager.update(0.03);
     m_hud.update(m_gameState);
     m_paddleKeys.update();
