@@ -146,17 +146,17 @@ Paddle& GameState::getPaddle()
 
 sf::Keyboard::Key GameState::getBallRelease() const
 {
-    return m_controlSettings.getMapping("Release Ball");
+    return m_controlSettings.getMapping("Space");
 }
 
 sf::Keyboard::Key GameState::getLeft() const
 {
-    return m_controlSettings.getMapping("Move Paddle Left");
+    return m_controlSettings.getMapping("Left");
 }
 
 sf::Keyboard::Key GameState::getRight() const
 {
-    return m_controlSettings.getMapping("Move Paddle Right");
+    return m_controlSettings.getMapping("Right");
 }
 
 // void GameState::setControls(const std::string &str, sf::Keyboard::Key key)
