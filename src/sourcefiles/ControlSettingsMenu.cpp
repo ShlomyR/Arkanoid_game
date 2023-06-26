@@ -1,14 +1,12 @@
 #include "ControlSettingsMenu.hpp"
-#include "MenuScreenHandler.hpp"
 #include "ControlSettings.hpp"
 #include "SoundManager.hpp"
 
 bool ControlSettingsMenu::m_isMusicPlayed;
 
-ControlSettingsMenu::ControlSettingsMenu(ControlSettings& controlSettings, sf::RenderWindow &window, MenuScreenHandler &menuScreenHandler)
+ControlSettingsMenu::ControlSettingsMenu(ControlSettings& controlSettings, sf::RenderWindow &window)
 : m_controlSettings(controlSettings)
 , m_window(window)
-, m_menuScreenHandler(menuScreenHandler)
 {
     initializeGUI();
 }
@@ -23,14 +21,23 @@ std::string removeLastCharacter(const std::string& input) {
 
 void ControlSettingsMenu::makeText(sf::Text &text, sf::Font &font, std::string str, sf::Vector2i vec2i)
 {
-    text.setFont(font);
-    text.setCharacterSize(48);
-    text.setFillColor(sf::Color{128,128,128});
-    text.setString(removeLastCharacter(str));
-    text.setScale(0.5, 0.5);
-    text.setPosition(vec2i.x,vec2i.y);
-    updateControlText(removeLastCharacter(str));
-    m_controlTexts.emplace_back(removeLastCharacter(str), &text);       
+    if (str == "Control Settings") {
+        text.setFont(font);
+        text.setCharacterSize(48);
+        text.setFillColor(sf::Color::Green);
+        text.setString(str);
+        text.setPosition(vec2i.x,vec2i.y);
+        text.setOutlineThickness(2);
+        text.setOutlineColor(sf::Color::Blue);
+    } else {
+        text.setFont(font);
+        text.setCharacterSize(48);
+        text.setFillColor(sf::Color::White);
+        text.setString(removeLastCharacter(str));
+        text.setPosition(vec2i.x,vec2i.y);
+        updateControlText(removeLastCharacter(str));
+        m_controlTexts.emplace_back(removeLastCharacter(str), &text);
+    }    
 }
 
 ControlSettings& ControlSettingsMenu::getControlSettings()
@@ -40,35 +47,33 @@ ControlSettings& ControlSettingsMenu::getControlSettings()
 
 void ControlSettingsMenu::initializeGUI()
 {
-    if (!m_font.loadFromFile("src/fonts/DIN.ttf")) {
+    if (!m_font.loadFromFile("src/fonts/kenVectoFuture2.ttf")) {
         std::cout << "Failed to load font!" << std::endl;
     }
-    makeText(m_releaseActiveButton, m_font, "pp", sf::Vector2i(m_menuScreenHandler.getOptionsBoxShape().getPosition().x + 40, 100));
-    makeText(m_leftActiveButton, m_font, "pp", sf::Vector2i(m_menuScreenHandler.getOptionsBoxShape().getPosition().x + 40, 200));
-    makeText(m_rightActiveButton, m_font, "pp", sf::Vector2i(m_menuScreenHandler.getOptionsBoxShape().getPosition().x + 40, 300));
-    makeText(m_ballReleaseText, m_font, "Release Ball: ", sf::Vector2i(m_menuScreenHandler.getOptionsBoxShape().getPosition().x + 40, m_menuScreenHandler.getReleaseButtonShape().getPosition().y + m_menuScreenHandler.getReleaseButtonShape().getSize().y/2 - 10));
-    makeText(m_leftText, m_font, "Move Paddle Left: ", sf::Vector2i(m_menuScreenHandler.getOptionsBoxShape().getPosition().x + 40, m_menuScreenHandler.getMoveLeftButtonShape().getPosition().y + m_menuScreenHandler.getMoveLeftButtonShape().getSize().y/2 - 10));
-    makeText(m_rightText, m_font, "Move Paddle Right: ", sf::Vector2i(m_menuScreenHandler.getOptionsBoxShape().getPosition().x + 40, m_menuScreenHandler.getMoveRightButtonShape().getPosition().y + m_menuScreenHandler.getMoveRightButtonShape().getSize().y/2 - 10));
+
+    makeText(m_titleText, m_font, "Control Settings", sf::Vector2i(m_window.getSize().x - 650, 10));
+    makeText(m_ballReleaseText, m_font, "Space: ", sf::Vector2i(m_window.getSize().x -700, 110));
+    makeText(m_leftText, m_font, "Left: ", sf::Vector2i(m_window.getSize().x -700, 210));
+    makeText(m_rightText, m_font, "Right: ", sf::Vector2i(m_window.getSize().x -700, 310));
 }
 
 void ControlSettingsMenu::draw()
 {
+    m_window.draw(m_titleText);
     m_window.draw(m_ballReleaseText);
     m_window.draw(m_leftText);
     m_window.draw(m_rightText);
-    m_window.draw(m_releaseActiveButton);
-    m_window.draw(m_leftActiveButton);
-    m_window.draw(m_rightActiveButton);
 }
 
-void ControlSettingsMenu::updateText(const sf::Vector2u &)
+void ControlSettingsMenu::updateText(const sf::Vector2u &windowSize)
 {
-    m_releaseActiveButton.setPosition(m_menuScreenHandler.getReleaseButtonShape().getPosition().x +10,m_menuScreenHandler.getReleaseButtonShape().getPosition().y+10);
-    m_leftActiveButton.setPosition(m_menuScreenHandler.getMoveLeftButtonShape().getPosition().x +10,m_menuScreenHandler.getMoveLeftButtonShape().getPosition().y+10);
-    m_rightActiveButton.setPosition(m_menuScreenHandler.getMoveRightButtonShape().getPosition().x +10,m_menuScreenHandler.getMoveRightButtonShape().getPosition().y+10);
-    m_ballReleaseText.setPosition(m_menuScreenHandler.getOptionsBoxShape().getPosition().x + 40, m_menuScreenHandler.getReleaseButtonShape().getPosition().y + m_menuScreenHandler.getReleaseButtonShape().getSize().y/2 - 10);
-    m_leftText.setPosition(m_menuScreenHandler.getOptionsBoxShape().getPosition().x + 40, m_menuScreenHandler.getMoveLeftButtonShape().getPosition().y + m_menuScreenHandler.getMoveLeftButtonShape().getSize().y/2 - 10);
-    m_rightText.setPosition(m_menuScreenHandler.getOptionsBoxShape().getPosition().x + 40, m_menuScreenHandler.getMoveRightButtonShape().getPosition().y + m_menuScreenHandler.getMoveRightButtonShape().getSize().y/2 - 10);
+    int size = -200;
+    for (auto& controlText : m_controlTexts) {
+        sf::Vector2f buttonPos = sf::Vector2f(windowSize.x / 2 - controlText.second->getGlobalBounds().width / 2, windowSize.y / 2 + size);
+        controlText.second->setPosition(buttonPos);
+        size += 100;
+    }
+    m_titleText.setPosition(sf::Vector2f(windowSize.x / 2 - m_titleText.getGlobalBounds().width / 2, windowSize.y -750));
 }
 
 void ControlSettingsMenu::handleMouseMovedInput(sf::Vector2f& mousePosition)
@@ -77,13 +82,13 @@ void ControlSettingsMenu::handleMouseMovedInput(sf::Vector2f& mousePosition)
     for (auto& controlText : m_controlTexts) {
         if (controlText.second->getGlobalBounds().contains(mousePosition)) {
             isMouseHovering = true;
-            controlText.second->setOutlineColor(sf::Color::White);
-            controlText.second->setFillColor(sf::Color::White);
+            controlText.second->setOutlineColor(sf::Color::Blue);
+            controlText.second->setFillColor(sf::Color::Yellow);
             controlText.second->setOutlineThickness(2);
         } else {
-            controlText.second->setOutlineColor(sf::Color{128,128,128});
+            controlText.second->setOutlineColor(sf::Color::White);
             controlText.second->setOutlineThickness(0);
-            controlText.second->setFillColor(sf::Color{128,128,128});
+            controlText.second->setFillColor(sf::Color::White);
         }
     }
 
@@ -124,33 +129,23 @@ void ControlSettingsMenu::handleKeyPressedInput(const sf::Event& event, sf::Vect
 void ControlSettingsMenu::updateControlText(const std::string& control) {
     sf::Text* text = nullptr;
 
-    if (control == "Release Ball") {
+    if (control == "Space") {
         text = &m_ballReleaseText;
-        m_releaseActiveButton.setPosition(m_menuScreenHandler.getReleaseButtonShape().getPosition().x +10,m_menuScreenHandler.getReleaseButtonShape().getPosition().y+10);
-    } else if (control == "Move Paddle Left") {
+    } else if (control == "Left") {
         text = &m_leftText;
-        m_leftActiveButton.setPosition(m_menuScreenHandler.getMoveLeftButtonShape().getPosition().x +10,m_menuScreenHandler.getMoveLeftButtonShape().getPosition().y+10);
-    } else if (control == "Move Paddle Right") {
+    } else if (control == "Right") {
         text = &m_rightText;
-        m_rightActiveButton.setPosition(m_menuScreenHandler.getMoveRightButtonShape().getPosition().x +10,m_menuScreenHandler.getMoveRightButtonShape().getPosition().y+10);
     }
 
     if (text) {
         sf::Keyboard::Key key = m_controlSettings.getMapping(control);
         std::string keyString = keyToString(key);
-        if (control == "Release Ball") {
-           m_releaseActiveButton.setString(keyString);
-        } else if (control == "Move Paddle Left") {
-            m_leftActiveButton.setString(keyString);
-        } else if (control == "Move Paddle Right") {
-            m_rightActiveButton.setString(keyString);
-        }
 
         if (control == m_selectedControl) {
             keyString = "Press any key...";
         }
 
-        text->setString(control + ": ");
+        text->setString(control + ": " + keyString);
     }
 }
 

@@ -9,12 +9,10 @@
 #include <string>
 #include <vector>
 
-class MenuScreenHandler;
-
 class ControlSettingsMenu
 {
 public:
-    ControlSettingsMenu(ControlSettings&, sf::RenderWindow&, MenuScreenHandler &);
+    ControlSettingsMenu(ControlSettings&, sf::RenderWindow&);
     void handleKeyPressedInput(const sf::Event&, sf::Vector2f&);
     void handleMouseMovedInput(sf::Vector2f& );
     ControlSettings& getControlSettings();
@@ -27,11 +25,9 @@ private:
     void makeText(sf::Text &, sf::Font &, std::string, sf::Vector2i);
 private:
     ControlSettings& m_controlSettings;
-    sf::RenderWindow &m_window;
-    MenuScreenHandler &m_menuScreenHandler;
     std::string m_selectedControl;
     std::vector<std::pair<std::string, sf::Text*>> m_controlTexts;
-
+    sf::RenderWindow &m_window;
     bool static m_isMusicPlayed;
 
     sf::Font m_font;
@@ -39,8 +35,4 @@ private:
     sf::Text m_ballReleaseText;
     sf::Text m_leftText;
     sf::Text m_rightText;
-
-    sf::Text m_releaseActiveButton;
-    sf::Text m_leftActiveButton;
-    sf::Text m_rightActiveButton;
 };
