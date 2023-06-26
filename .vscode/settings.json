@@ -1,9 +1,5 @@
 {
     "cSpell.words": [
-        "Arkanoid",
-        "Fullscreen",
-        "gamepad",
-        "gamepads",
         "geter",
         "msys",
         "Numpad",
@@ -70,9 +66,7 @@
         "streambuf": "cpp",
         "thread": "cpp",
         "cinttypes": "cpp",
-        "typeinfo": "cpp",
-        "unordered_set": "cpp",
-        "variant": "cpp"
+        "typeinfo": "cpp"
     },
     "cmake.configureOnOpen": false
 }
