@@ -17,6 +17,7 @@ class Options;
 class Difficulty;
 class Video;
 class PaddleArrowsHandnling;
+class MenuScreenHandler;
 
 class GameStateUpdaterImpl : public GameStateUpdater
 {
@@ -34,6 +35,7 @@ public:
         , GameResetter &
         , WindowManager &
         , PaddleArrowsHandnling &
+        , MenuScreenHandler&
     );
 
     void update() override;
@@ -61,6 +63,7 @@ private:
     GameResetter &m_gameResetter;
     WindowManager &m_windowManager;
     PaddleArrowsHandnling &m_paddleKeys;
+    MenuScreenHandler &m_menuScreenHandler;
 
     static bool m_isMusicPlayed;
 };
