@@ -16,6 +16,7 @@ public:
     virtual void setIsSelected(bool) = 0;
     virtual void setIsTranslucent(bool value) = 0;
     virtual sf::Text* getText() = 0;
+    virtual void setBoxBorder(sf::RectangleShape&) = 0;
 protected:
     sf::Font m_font;
     int m_firstButtonPos;
