@@ -2,3 +2,4 @@
 *.mp4 filter=lfs diff=lfs merge=lfs -text
 The_Last_of_Us_Remastered_Main_Menu_at_4K.wav filter=lfs diff=lfs merge=lfs -text
 The_Last_of_Us_Remastered_Main_Menu_at_4K.mp4 filter=lfs diff=lfs merge=lfs -text
+The_Last_of_Us_Remastered_Main_Menu_at_4K_(All_Tracks).wav filter=lfs diff=lfs merge=lfs -text
