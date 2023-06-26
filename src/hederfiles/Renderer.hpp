@@ -2,6 +2,10 @@
 #include "GameState.hpp"
 #include "Menu.hpp"
 
+#include <SFML/Config.hpp>
+#include <SFML/Graphics.hpp>
+#include <sfeMovie/Movie.hpp>
+
 class Hud;
 class Paddle;
 class Ball;
@@ -13,6 +17,8 @@ class Difficulty;
 class Video;
 class ControlSettingsMenu;
 class VolumeManager;
+class MenuScreenHandler;
+class VideoPlayer;
 
 class RendererImpl : public Renderer
 {
@@ -31,6 +37,8 @@ public:
         , Background &
         , ControlSettingsMenu &
         , VolumeManager &
+        , MenuScreenHandler &
+        , VideoPlayer &
     );
 
     void render() override;
@@ -49,4 +57,6 @@ private:
     Background &m_background;
     ControlSettingsMenu &m_controlSettingsMenu;
     VolumeManager &m_volume;
+    MenuScreenHandler &m_menuScreenHandler;
+    VideoPlayer &m_movie;
 };
