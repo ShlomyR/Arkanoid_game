@@ -2,7 +2,7 @@
 
 
 WindowManager::WindowManager(const sf::Vector2u& windowSize, const std::string& windowTitle)
-: m_window(sf::VideoMode(windowSize.x, windowSize.y), windowTitle,sf::Style::Fullscreen)
+: m_window(sf::VideoMode(windowSize.x, windowSize.y), windowTitle)
 {
     sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
     sf::Vector2i windowPosition(desktopMode.width / 2 - windowSize.x / 2, desktopMode.height / 2 - windowSize.y / 2);
