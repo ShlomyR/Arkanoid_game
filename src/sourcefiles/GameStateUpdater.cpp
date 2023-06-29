@@ -214,7 +214,6 @@ void GameStateUpdaterImpl::updateControlSettingPage()
     m_video.setIsVideoPageShown(false);
     m_menuScreenHandler.setCurrPage("ControlSettingPage");
     m_menuScreenHandler.updateBox("ControlSettingPage");
-    m_hud.update(m_gameState);
 }
 
 void GameStateUpdaterImpl::updateVolumePage()
