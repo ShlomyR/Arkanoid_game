@@ -7,19 +7,27 @@ PaddleArrowsHandnling::PaddleArrowsHandnling(Paddle &paddle, ControlSettings &co
 
 void PaddleArrowsHandnling::left()
 {
-    if (sf::Keyboard::isKeyPressed(m_controlSettings.getMapping("Move Paddle Left"))) {
-        m_paddle.move(-10, 0);
-    } else if (sf::Joystick::isButtonPressed(0,m_controlSettings.getPs4Mapping("Move Paddle Left"))) {
-        m_paddle.move(-10, 0);
-    }
+    if (sf::Joystick::isConnected(0)) {
+        if (sf::Joystick::isButtonPressed(0,m_controlSettings.getPs4Mapping("Move Paddle Left"))) {
+            m_paddle.move(-10, 0);
+        }
+    } else {
+        if (sf::Keyboard::isKeyPressed(m_controlSettings.getMapping("Move Paddle Left"))) {
+            m_paddle.move(-10, 0);
+        }
+    } 
 }
 
 void PaddleArrowsHandnling::right()
 {
-    if (sf::Keyboard::isKeyPressed(m_controlSettings.getMapping("Move Paddle Right"))) {
-        m_paddle.move(10, 0);
-    } else if (sf::Joystick::isButtonPressed(0,m_controlSettings.getPs4Mapping("Move Paddle Right"))) {
-        m_paddle.move(10, 0);
+    if (sf::Joystick::isConnected(0)) {
+        if (sf::Joystick::isButtonPressed(0,m_controlSettings.getPs4Mapping("Move Paddle Right"))) {
+            m_paddle.move(10, 0);
+        }
+    } else {
+        if (sf::Keyboard::isKeyPressed(m_controlSettings.getMapping("Move Paddle Right"))) {
+            m_paddle.move(10, 0);
+        }
     }
 }
 
