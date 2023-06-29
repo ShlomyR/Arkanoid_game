@@ -49,6 +49,11 @@ void ControlSettingsMenu::initializeGUI()
     makeText(m_ballReleaseText, m_font, "Release Ball: ", sf::Vector2i(m_menuScreenHandler.getOptionsBoxShape().getPosition().x + 40, m_menuScreenHandler.getReleaseButtonShape().getPosition().y + m_menuScreenHandler.getReleaseButtonShape().getSize().y/2 - 10));
     makeText(m_leftText, m_font, "Move Paddle Left: ", sf::Vector2i(m_menuScreenHandler.getOptionsBoxShape().getPosition().x + 40, m_menuScreenHandler.getMoveLeftButtonShape().getPosition().y + m_menuScreenHandler.getMoveLeftButtonShape().getSize().y/2 - 10));
     makeText(m_rightText, m_font, "Move Paddle Right: ", sf::Vector2i(m_menuScreenHandler.getOptionsBoxShape().getPosition().x + 40, m_menuScreenHandler.getMoveRightButtonShape().getPosition().y + m_menuScreenHandler.getMoveRightButtonShape().getSize().y/2 - 10));
+
+    m_controlSettingVec.push_back(&m_ballReleaseText);
+    m_controlSettingVec.push_back(&m_leftText);
+    m_controlSettingVec.push_back(&m_rightText);
+   
 }
 
 void ControlSettingsMenu::draw()
@@ -98,7 +103,31 @@ void ControlSettingsMenu::handleMouseMovedInput(sf::Vector2f& mousePosition)
 void ControlSettingsMenu::handleKeyPressedInput(const sf::Event& event, sf::Vector2f& mousePosition)
 {
     for (auto& controlText : m_controlTexts) {
-        if (controlText.second->getGlobalBounds().contains(mousePosition)) {
+        if (sf::Joystick::isConnected(0)) {
+            if (controlText.second->getFillColor() == sf::Color::White) {
+                size_t pressedKey = event.joystickButton.button;
+                bool keyExists = false;
+                for (auto& existingText : m_controlTexts) {
+                    if (existingText.first != controlText.first && m_controlSettings.getPs4Mapping(existingText.first) == pressedKey) {
+                        m_controlSettings.updatePs4Mapping(existingText.first, 30);
+                        updateControlText(existingText.first);
+                        keyExists = true;
+                        break;
+                    }
+                }
+                if (pressedKey != 0) {
+                    m_controlSettings.updatePs4Mapping(controlText.first, pressedKey);
+                    updateControlText(controlText.first);
+                    if (keyExists) {
+                        SoundManager::getInstance()->playSound("src/sounds/replace_key_sound.wav");
+                    } else {
+                        SoundManager::getInstance()->playSound("src/sounds/assign_key_sound.wav");
+                    }
+                }
+                
+
+            }
+        } else if (controlText.second->getGlobalBounds().contains(mousePosition)) {
             sf::Keyboard::Key pressedKey = event.key.code;
             bool keyExists = false;
             for (auto& existingText : m_controlTexts) {
@@ -136,21 +165,70 @@ void ControlSettingsMenu::updateControlText(const std::string& control) {
     }
 
     if (text) {
-        sf::Keyboard::Key key = m_controlSettings.getMapping(control);
-        std::string keyString = keyToString(key);
-        if (control == "Release Ball") {
-           m_releaseActiveButton.setString(keyString);
-        } else if (control == "Move Paddle Left") {
-            m_leftActiveButton.setString(keyString);
-        } else if (control == "Move Paddle Right") {
-            m_rightActiveButton.setString(keyString);
-        }
+        if (sf::Joystick::isConnected(0)) {
+            size_t Key = m_controlSettings.getPs4Mapping(control);
+            std::string buttonString = ps4ButtonToString(Key);
+            if (control == "Release Ball") {
+                m_releaseActiveButton.setString(buttonString);
+            } else if (control == "Move Paddle Left") {
+                m_leftActiveButton.setString(buttonString);
+            } else if (control == "Move Paddle Right") {
+                m_rightActiveButton.setString(buttonString);
+            }
 
-        if (control == m_selectedControl) {
-            keyString = "Press any key...";
-        }
+            if (control == m_selectedControl) {
+                buttonString = "Press any key...";
+            }
 
-        text->setString(control + ": ");
+            text->setString(control + ": ");
+        } else {
+            sf::Keyboard::Key key = m_controlSettings.getMapping(control);
+            std::string keyString = keyToString(key);
+            if (control == "Release Ball") {
+                m_releaseActiveButton.setString(keyString);
+            } else if (control == "Move Paddle Left") {
+                m_leftActiveButton.setString(keyString);
+            } else if (control == "Move Paddle Right") {
+                m_rightActiveButton.setString(keyString);
+            }
+
+            if (control == m_selectedControl) {
+                keyString = "Press any key...";
+            }
+
+            text->setString(control + ": ");
+        }
+        
+    }
+}
+
+std::vector<sf::Text *> ControlSettingsMenu::getVectorsTexts()
+{
+    return m_controlSettingVec;
+}
+
+std::string ControlSettingsMenu::ps4ButtonToString(size_t button) {
+    static const std::map<int, std::string> buttonToStringMap = {
+        { 0, "X" },
+        { 1, "CIRCLE" },
+        { 2, "TRIANGLE" },
+        { 3, "SQUARE" },
+        { 4, "L1" },
+        { 5, "R1" },
+        { 6, "L2" },
+        { 7, "R2" },
+        { 8, "Share" },
+        { 9, "Options" },
+        { 10, "PS" },
+        { 11, "L3" },
+        { 12, "R3" }
+    };
+
+    auto it = buttonToStringMap.find(button);
+    if (it != buttonToStringMap.end()) {
+        return it->second;
+    } else {
+        return "Unknown";
     }
 }
 

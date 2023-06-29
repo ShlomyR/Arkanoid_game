@@ -20,10 +20,12 @@ public:
     ControlSettings& getControlSettings();
     void draw();
     void updateText(const sf::Vector2u&);
+    void updateControlText(const std::string&);
+    std::vector<sf::Text*> getVectorsTexts();
 private:
     void initializeGUI();
-    void updateControlText(const std::string&);
     std::string keyToString(sf::Keyboard::Key);
+    std::string ps4ButtonToString(size_t);
     void makeText(sf::Text &, sf::Font &, std::string, sf::Vector2i);
 private:
     ControlSettings& m_controlSettings;
@@ -31,6 +33,7 @@ private:
     MenuScreenHandler &m_menuScreenHandler;
     std::string m_selectedControl;
     std::vector<std::pair<std::string, sf::Text*>> m_controlTexts;
+    std::vector<sf::Text*> m_controlSettingVec;
 
     bool static m_isMusicPlayed;
 
