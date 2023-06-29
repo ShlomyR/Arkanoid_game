@@ -13,7 +13,7 @@ void MediumOption::draw(sf::RenderWindow& window)
 bool MediumOption::handleInput(InputHandler& inputHandler, GameState &gameState)
 {
     bool mouseHover = m_mediumText.getGlobalBounds().contains(inputHandler.getMousePosition());
-    if (mouseHover) {
+    if (mouseHover || m_mediumText.getFillColor() == sf::Color::White) {
         m_mediumText.setOutlineColor(sf::Color::White);
         if (!m_isMusicPlayed) {
             SoundManager::getInstance()->playSound("src/sounds/Menu_Selection_Click.wav");

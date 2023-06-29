@@ -19,6 +19,7 @@ public:
 private:
     sf::Text m_mediumText;
     bool m_isSelected = false;
+    bool m_mouseCurser = false;
     static bool m_isMusicPlayed;
     bool m_isTranslucent = true;
     sf::Color m_color;

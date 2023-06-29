@@ -13,7 +13,7 @@ void HardOption::draw(sf::RenderWindow& window)
 bool HardOption::handleInput(InputHandler& inputHandler, GameState &gameState)
 {
     bool mouseHover = m_hardText.getGlobalBounds().contains(inputHandler.getMousePosition());
-    if (mouseHover) {
+    if (mouseHover || m_hardText.getFillColor() == sf::Color::White) {
         m_hardText.setOutlineColor(sf::Color::White);
         if (!m_isMusicPlayed) {
             SoundManager::getInstance()->playSound("src/sounds/Menu_Selection_Click.wav");

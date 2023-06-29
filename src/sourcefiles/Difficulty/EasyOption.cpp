@@ -13,7 +13,7 @@ void EasyOption::draw(sf::RenderWindow& window)
 bool EasyOption::handleInput(InputHandler& inputHandler, GameState &gameState)
 {
     bool mouseHover = m_easyText.getGlobalBounds().contains(inputHandler.getMousePosition());
-    if (mouseHover) {
+    if (mouseHover || m_easyText.getFillColor() == sf::Color::White) {
         m_easyText.setOutlineColor(sf::Color::White);
         if (!m_isMusicPlayed) {
             SoundManager::getInstance()->playSound("src/sounds/Menu_Selection_Click.wav");
