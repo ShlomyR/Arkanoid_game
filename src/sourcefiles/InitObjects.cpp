@@ -19,7 +19,7 @@ InitObjects::InitObjects(sf::Vector2u windowSize, std::string windowTitle, int s
     , m_hud(m_window.getRenderWindow())
     , m_movie(m_window.getRenderWindow())
     , m_resoloution(m_window, m_border, m_paddle, m_brick, m_hud, m_menu, m_options, m_difficulty, m_video, m_controlSettingsMenu, m_volumeManager, m_menuScreenHandler)
-    , m_gameState(startingLives, startingLevel, 0,0,maxLevel, m_video, m_difficulty, m_options, m_menu, m_ball, m_paddle, m_window, m_resoloution, m_controlSettings)
+    , m_gameState(startingLives, startingLevel, 0,0,maxLevel, m_video, m_difficulty, m_options, m_menu, m_ball, m_paddle, m_window, m_resoloution, m_controlSettings, m_volumeManager, m_controlSettingsMenu)
     , m_background()
     , m_paddleKeys(m_paddle, m_controlSettings)
     , m_gameResetter(std::make_unique<GameResetterImpl>(m_brick,m_paddle,m_window,m_gameState))
