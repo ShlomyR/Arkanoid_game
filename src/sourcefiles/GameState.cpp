@@ -1,7 +1,23 @@
 #include "GameState.hpp"
 
 
-GameState::GameState(int health, int level, int score, int high_score, int maxLevel, Video &video, Difficulty &difficulty, Options &options, Menu &menu, Ball &ball, Paddle &paddle, WindowManager &window, Resoloution &resoloution, ControlSettings &controlSettings)
+GameState::GameState(int health
+    , int level
+    , int score
+    , int high_score
+    , int maxLevel
+    , Video &video
+    , Difficulty &difficulty
+    , Options &options
+    , Menu &menu
+    , Ball &ball
+    , Paddle &paddle
+    , WindowManager &window
+    , Resoloution &resoloution
+    , ControlSettings &controlSettings
+    , VolumeManager& volumeManager
+    , ControlSettingsMenu &controlSettingsMenu
+)
 : m_health(health)
 , m_level(level)
 , m_max_level(maxLevel)
@@ -16,6 +32,8 @@ GameState::GameState(int health, int level, int score, int high_score, int maxLe
 , m_window(window)
 , m_resoloution(resoloution)
 , m_controlSettings(controlSettings)
+, m_volumeManager(volumeManager)
+, m_controlSettingsMenu(controlSettingsMenu)
 {
 
 }
@@ -142,6 +160,16 @@ Resoloution &GameState::getResoloution()
 Paddle& GameState::getPaddle()
 {
     return m_paddle;
+}
+
+VolumeManager &GameState::getVolumeManager()
+{
+    return m_volumeManager;
+}
+
+ControlSettingsMenu &GameState::getControlSettingsMenu()
+{
+    return m_controlSettingsMenu;
 }
 
 sf::Keyboard::Key GameState::getBallRelease() const

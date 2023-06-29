@@ -9,6 +9,8 @@
 #include "Resoloution.hpp"
 #include "Paddle.hpp"
 #include "ControlSettings.hpp"
+#include "VolumeManager.hpp"
+#include "ControlSettingsMenu.hpp"
 
 #include <iostream>
 
@@ -35,7 +37,23 @@ enum class State
 class GameState
 {
 public:
-    GameState(int, int, int, int, int, Video &, Difficulty &, Options &, Menu &, Ball &, Paddle &, WindowManager &, Resoloution &, ControlSettings&);
+    GameState(int
+        ,int
+        , int
+        , int
+        , int
+        , Video &
+        , Difficulty &
+        , Options &
+        , Menu &
+        , Ball &
+        , Paddle &
+        , WindowManager &
+        , Resoloution &
+        , ControlSettings&
+        , VolumeManager&
+        , ControlSettingsMenu &
+    );
     int getHealth() const;
     int getLevel() const;
     int getScore() const;
@@ -66,6 +84,8 @@ public:
     WindowManager& getWindow();
     Resoloution& getResoloution();
     Paddle& getPaddle();
+    VolumeManager& getVolumeManager();
+    ControlSettingsMenu & getControlSettingsMenu();
 
     bool isBrickHit = false;
 private:
@@ -87,4 +107,6 @@ private:
     WindowManager &m_window;
     Resoloution &m_resoloution;
     ControlSettings &m_controlSettings;
+    VolumeManager &m_volumeManager;
+    ControlSettingsMenu &m_controlSettingsMenu;
 };
