@@ -152,7 +152,7 @@ Arkoined Brick Style Game is released under the [MIT License](LICENSE).
 
 This game was developed using the SFML library (Simple and Fast Multimedia Library). Special thanks to the SFML community for their contributions and support.
 
-and using naughty dog video background grate gaming company!!!
+and using [naughty dog](https://www.naughtydog.com) video background grate gaming company!!!
 
 ## Contact
 
