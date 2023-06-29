@@ -28,8 +28,7 @@ bool PlayOption::handleInput(InputHandler& inputHandler, GameState &gameState)
     if (sf::Joystick::isConnected(0)) {
         m_mouseCurser = false;
         gameState.getWindow().getRenderWindow().setMouseCursorVisible(false);
-        if (m_playText.getFillColor() == sf::Color::White)
-        {
+        if (m_playText.getFillColor() == sf::Color::White) {
             updateColor(m_playText, sf::Color::White);
             if (!m_isMusicPlayed) {
                 SoundManager::getInstance()->playSound("src/sounds/Menu_Selection_Click.wav");
