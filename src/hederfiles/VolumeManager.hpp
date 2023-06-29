@@ -19,8 +19,10 @@ public:
     void updateMousePrest(sf::Vector2f&);
     void updateText(const sf::Vector2u&);
     int getVolume();
+    std::vector<std::vector<sf::Text*>> getVectorsTexts();
 private:
     void initializeGUI();
+    void initVectors();
     void makeText(sf::Text &, sf::Font &, std::string, sf::Vector2i);
     void updateVolume();
 private:
@@ -32,6 +34,7 @@ private:
     sf::Text m_pluseText;
     sf::Text m_minusText;
     sf::Text m_volumeText;
+    std::vector<std::vector<sf::Text*>> m_volumeVec;
     std::vector<std::pair<std::string, sf::Text *>> m_controlTexts;
     sf::RenderWindow &m_window;
     MenuScreenHandler &m_menuScreenHandler;

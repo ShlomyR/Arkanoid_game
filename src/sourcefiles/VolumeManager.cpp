@@ -6,6 +6,17 @@
 
 bool VolumeManager::m_isMusicPlayed;
 
+void printTextVector(const std::vector<std::vector<sf::Text*>>& textVector) {
+    int i = -1;
+    for (const auto& row : textVector) {
+        std::cout << "vec:" << ++i << "\n";
+        for (const auto& text : row) {
+            std::cout << text->getString().toAnsiString() << ",\n";
+        }
+        std::cout << std::endl;
+    }
+}
+
 VolumeManager::VolumeManager(sf::RenderWindow &window, MenuScreenHandler &menuScreenHandler)
 : m_volume(100)
 , m_window(window)
@@ -24,6 +35,20 @@ void VolumeManager::initializeGUI()
     makeText(m_minusText, m_font, "<", sf::Vector2i(m_menuScreenHandler.getOptionsBoxShape().getPosition().x + m_menuScreenHandler.getOptionsBoxShape().getSize().x - 150, m_menuScreenHandler.getOptionsBoxShape().getPosition().y + 100));
     makeText(m_volumeText, m_font, std::to_string(m_volume) + " %", sf::Vector2i(m_menuScreenHandler.getOptionsBoxShape().getPosition().x + m_menuScreenHandler.getOptionsBoxShape().getSize().x - 100, m_menuScreenHandler.getOptionsBoxShape().getPosition().y + 100));
     makeText(m_pluseText, m_font, ">", sf::Vector2i(m_menuScreenHandler.getOptionsBoxShape().getPosition().x + m_menuScreenHandler.getOptionsBoxShape().getSize().x , m_menuScreenHandler.getOptionsBoxShape().getPosition().y + 100));
+    initVectors();
+}
+
+void VolumeManager::initVectors()
+{
+    std::vector<sf::Text*> tmp;
+    tmp.push_back(&m_masterVolumeText);
+    tmp.push_back(&m_muteText);
+    m_volumeVec.push_back(tmp);
+    tmp.clear();
+    tmp.push_back(&m_minusText);
+    tmp.push_back(&m_pluseText);
+    m_volumeVec.push_back(tmp);
+    printTextVector(m_volumeVec);
 }
 
 void VolumeManager::draw()
@@ -39,7 +64,18 @@ void VolumeManager::updateMouseMoved(sf::Vector2f& mousePosition)
 {
     bool isMouseHovering = false;
     for (auto& controlText : m_controlTexts) {
-        if (controlText.second->getGlobalBounds().contains(mousePosition)) {
+        if (sf::Joystick::isConnected(0)) {
+            if (controlText.second->getFillColor() == sf::Color::White) {
+                isMouseHovering = true;
+                controlText.second->setOutlineColor(sf::Color::White);
+                controlText.second->setFillColor(sf::Color::White);
+                controlText.second->setOutlineThickness(2);
+            } else {
+                controlText.second->setOutlineColor(sf::Color{ 128,128,128 });
+                controlText.second->setOutlineThickness(0);
+                controlText.second->setFillColor(sf::Color{ 128,128,128 });
+            }
+        } else if (controlText.second->getGlobalBounds().contains(mousePosition)) {
             isMouseHovering = true;
             controlText.second->setOutlineColor(sf::Color::White);
             controlText.second->setFillColor(sf::Color::White);
@@ -62,7 +98,7 @@ void VolumeManager::updateMouseMoved(sf::Vector2f& mousePosition)
 void VolumeManager::updateMousePrest(sf::Vector2f& mousePosition)
 {
     for (auto& controlText : m_controlTexts) {
-        if (controlText.second->getGlobalBounds().contains(mousePosition)) {
+        if (controlText.second->getGlobalBounds().contains(mousePosition) || controlText.second->getFillColor() == sf::Color::White) {
             if (controlText.first == "<") {
                 decreaseVolume(10);
             } else if (controlText.first == ">") {
@@ -113,30 +149,16 @@ void VolumeManager::updateText(const sf::Vector2u &)
     m_minusText.setPosition(m_menuScreenHandler.getOptionsBoxShape().getPosition().x + m_menuScreenHandler.getOptionsBoxShape().getSize().x - 150, m_menuScreenHandler.getOptionsBoxShape().getPosition().y + 100);
     m_volumeText.setPosition(m_menuScreenHandler.getOptionsBoxShape().getPosition().x + m_menuScreenHandler.getOptionsBoxShape().getSize().x - 100, m_menuScreenHandler.getOptionsBoxShape().getPosition().y + 100);
     m_pluseText.setPosition(m_menuScreenHandler.getOptionsBoxShape().getPosition().x + m_menuScreenHandler.getOptionsBoxShape().getSize().x , m_menuScreenHandler.getOptionsBoxShape().getPosition().y + 100);
-    // if (windowSize.x == 1024) {
-    //     m_masterVolumeText.setScale(0.4,0.4);
-    //     m_muteText.setScale(0.4,0.4);
-    //     m_minusText.setScale(0.4,0.4);
-    //     m_volumeText.setScale(0.4,0.4);
-    //     m_pluseText.setScale(0.4,0.4);
-    // } else if (windowSize.x == 800) {
-    //     m_masterVolumeText.setScale(0.3,0.3);
-    //     m_muteText.setScale(0.3,0.3);
-    //     m_minusText.setScale(0.3,0.3);
-    //     m_volumeText.setScale(0.3,0.3);
-    //     m_pluseText.setScale(0.3,0.3);
-    // } else if (windowSize.x == 1920) {
-    //     m_masterVolumeText.setScale(0.5,0.5);
-    //     m_muteText.setScale(0.5,0.5);
-    //     m_minusText.setScale(0.5,0.5);
-    //     m_volumeText.setScale(0.5,0.5);
-    //     m_pluseText.setScale(0.5,0.5);
-    // }
 }
 
 int VolumeManager::getVolume()
 {
     return m_volume;
+}
+
+std::vector<std::vector<sf::Text*>> VolumeManager::getVectorsTexts()
+{
+    return m_volumeVec;
 }
 
 void VolumeManager::setVolume(int volume)
@@ -161,9 +183,4 @@ void VolumeManager::decreaseVolume(int decrement)
 void VolumeManager::updateVolume()
 {
     sf::Listener::setGlobalVolume(m_volume);
-
-    // You can also update the volume of specific sound or music objects here
-    // For example:
-    // sound.setVolume(m_volume);
-    // music.setVolume(m_volume);
 }
