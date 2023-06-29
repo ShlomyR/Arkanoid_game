@@ -135,7 +135,7 @@ Arkoined Brick Style Game is a classic arcade game inspired by the popular brick
 - Use the left and right arrow keys to control the paddle.
 - Launch the ball by pressing the spacebar.
 ### Ps4 and Xbox controller:
-- at the moment only linux supports ps4 xbox controller:
+- at the moment only linux supports ps4 xbox controller (only tested on linux at the moment):
 - Use the `L1` and `R1` ps4 buttons to control the paddle and `TRIANGLE` 
 for releasing the ball.
 - Use the `LB` and `RB` xbox buttons to control the paddle and `X` for releasing the ball.
