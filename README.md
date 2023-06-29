@@ -135,7 +135,7 @@ Arkoined Brick Style Game is a classic arcade game inspired by the popular brick
 - Aim for a high score and try to beat your previous records.
 
 - at the moment only linux supports ps4 controller:
-- Use the L1 and R1 ps4 buttons to control the paddle and R2 for releasing the ball.
+- Use the `L1` and `R1` ps4 buttons to control the paddle and `TRIANGLE` for releasing the ball.
 
 
 ## License
