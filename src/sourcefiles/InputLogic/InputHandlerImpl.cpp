@@ -23,6 +23,32 @@
     #error Unsupported operating system
 #endif
 
+std::string ps4ButtonToString(int button) {
+    static const std::map<int, std::string> buttonToStringMap = {
+        { 0, "X" },
+        { 1, "CIRCLE" },
+        { 2, "TRIANGLE" },
+        { 3, "SQUARE" },
+        { 4, "L1" },
+        { 5, "R1" },
+        { 6, "L2" },
+        { 7, "R2" },
+        { 8, "Share" },
+        { 9, "Options" },
+        { 10, "PS" },
+        { 11, "L3" },
+        { 12, "R3" }
+    };
+
+    auto it = buttonToStringMap.find(button);
+    if (it != buttonToStringMap.end()) {
+        return it->second;
+    } else {
+        return "Unknown";
+    }
+}
+
+
 void deleteKeysExceptEscape(std::unordered_map<sf::Keyboard::Key, std::function<void ()>>& keyMap) {
     auto it = keyMap.begin();
     while (it != keyMap.end()) {
@@ -34,12 +60,33 @@ void deleteKeysExceptEscape(std::unordered_map<sf::Keyboard::Key, std::function<
     }
 }
 
+void deletePs4ButtonsExceptEscape(std::unordered_map<size_t, std::function<void ()>>& keyMap) {
+    auto it = keyMap.begin();
+    while (it != keyMap.end()) {
+        if (it->first == 0) {
+            ++it;
+        } else if (it->first == 1) {
+            ++it;
+        } else {
+            it = keyMap.erase(it);
+        }
+    }
+}
+
 bool InputHandlerImpl::m_isMusicPlayed;
 
 void InputHandlerImpl::printVector(std::unordered_map<sf::Keyboard::Key, std::function<void ()>>& keyMap) {
     auto it = keyMap.begin();
     while (it != keyMap.end()) {
         std::cout << "key: " << keyToString(it->first) << "\n";
+        ++it;
+    }
+}
+
+void InputHandlerImpl::printPs4Vector(std::unordered_map<size_t, std::function<void ()>>& keyMap) {
+    auto it = keyMap.begin();
+    while (it != keyMap.end()) {
+        std::cout << "button: " << ps4ButtonToString(it->first) << "\n";
         ++it;
     }
 }
@@ -113,12 +160,29 @@ void InputHandlerImpl::handleInput()
                 break;
             case sf::Event::JoystickMoved:
                 performPs4AxisAction(m_event);
+                if (m_gameState.getState() == State::VolumePage) {
+                    m_volume.updateMouseMoved(m_mousePosition);
+                }
                 break;
             case sf::Event::JoystickButtonPressed:
                 performPs4Action(m_event);
+                updateKeyPressedControlSettingPage();
                 if (m_gameState.getState() == State::VolumePage) {
-                    m_volume.updateMousePrest(m_mousePosition);
+                    if (m_event.joystickButton.button == 0) {
+                        m_volume.updateMousePrest(m_mousePosition);
+                    }
                 }
+                break;
+            case sf::Event::JoystickConnected:
+                m_controlSettingsMenu.updateControlText("Move Paddle Left");
+                m_controlSettingsMenu.updateControlText("Move Paddle Right");
+                m_controlSettingsMenu.updateControlText("Release Ball");
+                m_WindowArrowsKey.highlightFirstWordInPage();
+                break;
+            case sf::Event::JoystickDisconnected:
+                m_controlSettingsMenu.updateControlText("Move Paddle Left");
+                m_controlSettingsMenu.updateControlText("Move Paddle Right");
+                m_controlSettingsMenu.updateControlText("Release Ball");
                 break;
             case sf::Event::MouseButtonPressed:
                 performMouseAction(m_event);
@@ -180,7 +244,6 @@ void InputHandlerImpl::initMap()
     m_mouse_action_map[sf::Mouse::Left] = [this]() { m_mouse.left(false); };
     m_ps4_action_map[0] = [this]() { m_mouse.left(false); };
     m_ps4_action_map[1] = [this]() {  m_WindowArrowsKey.escape(); };
-    // m_ps4_action_map[2] = [this]() {  m_paddle_keys.space(); };
 
     m_ps4_axis_map[sf::Joystick::Y] = [this]() { 
         if (sf::Joystick::getAxisPosition(0, sf::Joystick::Y) == 100) {
@@ -189,13 +252,13 @@ void InputHandlerImpl::initMap()
             m_WindowArrowsKey.up(); 
         }
     };
-    m_ps4_axis_map[m_controlSettingsMenu.getControlSettings().getPs4Mapping("Move Paddle Left")] = [this]() { 
+    m_ps4_action_map[m_controlSettingsMenu.getControlSettings().getPs4Mapping("Move Paddle Left")] = [this]() { 
         m_paddle_keys.left();
     };
-    m_ps4_axis_map[m_controlSettingsMenu.getControlSettings().getPs4Mapping("Move Paddle Right")] = [this]() { 
+    m_ps4_action_map[m_controlSettingsMenu.getControlSettings().getPs4Mapping("Move Paddle Right")] = [this]() { 
         m_paddle_keys.right();
     };
-    m_ps4_axis_map[m_controlSettingsMenu.getControlSettings().getPs4Mapping("Release Ball")] = [this]() { 
+    m_ps4_action_map[m_controlSettingsMenu.getControlSettings().getPs4Mapping("Release Ball")] = [this]() { 
         m_paddle_keys.space(); 
     };
     m_ps4_axis_map[sf::Joystick::PovY] = [this]() { 
@@ -205,14 +268,28 @@ void InputHandlerImpl::initMap()
             m_WindowArrowsKey.up(); 
         }
     };
+    m_ps4_axis_map[sf::Joystick::PovX] = [this]() { 
+        if (sf::Joystick::getAxisPosition(0, sf::Joystick::PovX) == 100) {
+            m_WindowArrowsKey.right(); 
+        } else if (sf::Joystick::getAxisPosition(0, sf::Joystick::PovX) == -100) {
+            m_WindowArrowsKey.left(); 
+        }
+    };
 }
 
 void InputHandlerImpl::updateKeyMap()
 {
-    m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Move Paddle Left")] = [this]() { m_paddle_keys.left(); };
-    m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Move Paddle Right")] = [this]() { m_paddle_keys.right(); };
-    m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Release Ball")] = [this]() { m_paddle_keys.space(); };
-    printVector(m_keys_action_map);
+    if (sf::Joystick::isConnected(0)) {
+        m_ps4_action_map[m_controlSettingsMenu.getControlSettings().getPs4Mapping("Move Paddle Left")] = [this]() { m_paddle_keys.left(); };
+        m_ps4_action_map[m_controlSettingsMenu.getControlSettings().getPs4Mapping("Move Paddle Right")] = [this]() { m_paddle_keys.right(); };
+        m_ps4_action_map[m_controlSettingsMenu.getControlSettings().getPs4Mapping("Release Ball")] = [this]() { m_paddle_keys.space(); };
+        printPs4Vector(m_ps4_action_map);
+    } else {
+        m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Move Paddle Left")] = [this]() { m_paddle_keys.left(); };
+        m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Move Paddle Right")] = [this]() { m_paddle_keys.right(); };
+        m_keys_action_map[m_controlSettingsMenu.getControlSettings().getMapping("Release Ball")] = [this]() { m_paddle_keys.space(); };
+        printVector(m_keys_action_map);
+    }
 }
 
 void InputHandlerImpl::updateMouseMovedControlSettingPage()
@@ -227,11 +304,20 @@ void InputHandlerImpl::updateMouseMovedControlSettingPage()
 
 void InputHandlerImpl::updateKeyPressedControlSettingPage()
 {
-    if (m_gameState.getState() == State::ControlSettingPage) {
-        deleteKeysExceptEscape(m_keys_action_map);
-        m_controlSettingsMenu.handleKeyPressedInput(m_event,m_mousePosition);
-        updateKeyMap();
+    if (sf::Joystick::isConnected(0)) {
+        if (m_gameState.getState() == State::ControlSettingPage) {
+            deletePs4ButtonsExceptEscape(m_ps4_action_map);
+            m_controlSettingsMenu.handleKeyPressedInput(m_event,m_mousePosition);
+            updateKeyMap();
+        }
+    } else {
+        if (m_gameState.getState() == State::ControlSettingPage) {
+            deleteKeysExceptEscape(m_keys_action_map);
+            m_controlSettingsMenu.handleKeyPressedInput(m_event,m_mousePosition);
+            updateKeyMap();
+        }
     }
+    
 }
 
 void InputHandlerImpl::performKeyAction(sf::Event event) {

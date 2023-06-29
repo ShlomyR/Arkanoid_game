@@ -48,6 +48,7 @@ private:
     void performPs4AxisAction(sf::Event);
     std::string keyToString(sf::Keyboard::Key );
     void printVector(std::unordered_map<sf::Keyboard::Key, std::function<void ()>>& );
+    void printPs4Vector(std::unordered_map<size_t, std::function<void ()>>&);
 private:
     void checkEventUnderTenCharacter();
     void checkEventDeleteCharacter();
